@@ -16,7 +16,7 @@
             <ColumnDefinition Width="124*"/>
             <ColumnDefinition Width="193*"/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="listViewPerson" Margin="0,0,0,4" ItemsSource="{Binding peopleList}" >
+        <ListView x:Name="listViewPerson" Margin="0,0,0,4" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path = Surname}" Header="Фамилия" Width="150"></GridViewColumn>
@@ -49,20 +49,20 @@
 
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Grid.ColumnSpan="2">
             <Label x:Name="labelSurname" 
-               Content="Фамилия" 
-               HorizontalAlignment="Left" 
-               VerticalAlignment="Top"/>
+                   Content="Фамилия" 
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Top"/>
 
             <Label x:Name="labelFirstName" 
-               Content="Имя" 
-               HorizontalAlignment="Left" 
-               VerticalAlignment="Top"
-               Margin="0,10"/>
+                   Content="Имя" 
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Top"
+                   Margin="0,10"/>
 
             <Label x:Name="labelLastName" 
-               Content="Отчество" 
-               HorizontalAlignment="Left" 
-               VerticalAlignment="Top"/>
+                   Content="Отчество" 
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Top"/>
 
             <Label x:Name="labelPhoneNumber" 
                    Content="Номер телефона"
@@ -102,21 +102,17 @@
                      Text="{Binding ElementName=listViewPerson, Path=SelectedItem.LastName}"/>
 
             <TextBox x:Name="textBoxPhoneNumber"
-                 TextWrapping="Wrap" 
-                 Width="120"
-                 Margin="0,22"
+                     TextWrapping="Wrap" 
+                     Width="120"
+                     Margin="0,22"
                      Text="{Binding ElementName=listViewPerson, Path=SelectedItem.PhoneNumber}"/>
 
             <TextBox x:Name="textBoxPassportData" 
-                 IsReadOnly="True" 
-                 TextWrapping="Wrap" 
-                 Width="120" 
+                     IsReadOnly="True" 
+                     TextWrapping="Wrap" 
+                     Width="120" 
                      Height="20"
                      Text="{Binding ElementName=listViewPerson, Path=SelectedItem.PassportData}"/>
         </StackPanel>
-
-        <Label x:Name="labelError" 
-               Grid.Column="2" 
-               Margin="126,114,12,221"/>
     </Grid>
 </Window>

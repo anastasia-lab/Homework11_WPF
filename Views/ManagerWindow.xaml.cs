@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using System.Xml;
 
 namespace Homework11_WPF.Views
 {
@@ -26,64 +27,52 @@ namespace Homework11_WPF.Views
             ShowDataManager();
         }
 
-       public ObservableCollection<Manager> peopleList { get; set; }
+        public ObservableCollection<Manager> peopleList { get; set; }
+
         void ShowDataManager()
         {
-            Manager manager = new Manager();
-            string PassportDataStringResult = "";
-            double PhoneNumberResult = 0;
+            //Manager manager = new Manager();
             peopleList = new ObservableCollection<Manager>();
 
-            XDocument xDocument = XDocument.Load("people.xml");
-            XElement? people = xDocument.Element("People");
-
-            if (!(people is null))
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("people.xml");
+            XmlElement? xRoot = xDoc.DocumentElement;
+            if (xRoot != null)
             {
-                foreach (XElement person in people.Elements("Person"))
+                foreach (XmlElement xnode in xRoot)
                 {
-                    XElement? SurnamePersone = person.Element("Surname");
-                    manager.Surname = SurnamePersone.Value;
+                    Manager[] manager = new Manager[xnode.ChildNodes.Count];
 
-                    XElement? FirstNamePersone = person.Element("FirstName");
-                    manager.FirstName = FirstNamePersone.Value;
-
-                    XElement? LastNamePersone = person.Element("LastName");
-                    manager.LastName = LastNamePersone.Value;
-
-                    XElement? PassportDataPersone = person.Element("PassportData");
-
-                    if (PassportDataPersone.Value != "")
+                    for (int i = 0; i < xnode.ChildNodes.Count; i++)
                     {
-                        PassportDataStringResult = manager.PassportData(PassportDataPersone.Value);
-                    }
-                    XElement? PhoneNumberPersone = person.Element("MobilePhone");
-                    if (PhoneNumberPersone.Value != "")
-                    {
-                        manager.PhoneNumber = double.Parse(PhoneNumberPersone.Value);
-                        PhoneNumberResult = manager.PhoneNumber;
+                        manager[i] = new Manager();
+                        string childnode = xnode.ChildNodes[i].Name;
+
+                        if (childnode == "Surname")
+                            manager[i].Surname = xnode.ChildNodes[i].InnerText;
+                        
+                        if (childnode == "FirstName")
+                            manager[i].FirstName = xnode.ChildNodes[i].InnerText;
+                        
+                        if (childnode == "LastName")
+                            manager[i].LastName = xnode.ChildNodes[i].InnerText;
+
+                        if (childnode == "MobilePhone")
+                        {
+                            if (xnode.ChildNodes[i].InnerText != "")
+                                manager[i].PhoneNumber = double.Parse(xnode.ChildNodes[i].InnerText);
+                        }
+
+                        if (childnode == "PassportData")
+                            manager[i].PassportData(xnode.ChildNodes[i].InnerText);
                     }
 
-                    peopleList.Add(manager);
+                    foreach (Manager clientData in manager)
+                        peopleList.Add(clientData);
+
                 }
-
             }
-
-            //textBoxSurname.Text = manager.Surname;
-            //textBoxFirstName.Text = manager.FirstName;
-            //textBoxLastName.Text = manager.LastName;
-            //textBoxPassportData.Text = PassportDataStringResult;
-
-            //if (PhoneNumberResult == 0)
-            //{
-            //    labelError.Content = "Введите номер телефона";
-            //    labelError.Foreground = Brushes.Red;
-            //}
-            //else textBoxPhoneNumber.Text = manager.PhoneNumber.ToString();
-        }
-
-        private void listViewPerson_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-           
         }
     }
+
 }

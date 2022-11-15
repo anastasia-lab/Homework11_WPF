@@ -33,16 +33,16 @@ namespace Homework11_WPF.Views
 
             XDocument xDocument = XDocument.Load("people.xml");
             XElement? people = xDocument.Element("People");
-
+            
             List<Consultant> peopleList = new List<Consultant>();
-
+            
             if (!(people is null))
             {
                 foreach (XElement person in people.Elements("Person"))
                 {
                     XElement? SurnamePersone = person.Element("Surname");
                     consultant.Surname = SurnamePersone.Value;
-
+                    
                     XElement? FirstNamePersone = person.Element("FirstName");
                     consultant.FirstName = FirstNamePersone.Value;
 

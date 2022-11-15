@@ -6,7 +6,7 @@ namespace Homework11_WPF
 {
     public class Worker
     {
-        public string Surname { get; set; }
+        public virtual string Surname { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public virtual double PhoneNumber { get; set; }
