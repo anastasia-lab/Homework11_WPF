@@ -17,7 +17,7 @@ namespace Homework11_WPF
         /// </summary>
         /// <param name="_passportData"> Паспортные данные </param>
         /// <returns></returns>
-        public override string PassportData(string _passportData)
+        public override string GetPassportData(string _passportData)
         {
             if(_passportData != "")
                 return "*********";

@@ -10,7 +10,7 @@ namespace Homework11_WPF
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public virtual double PhoneNumber { get; set; }
-        public virtual string PassportData(string _passportData) 
+        public virtual string GetPassportData(string _passportData) 
         {
             return _passportData;
         }

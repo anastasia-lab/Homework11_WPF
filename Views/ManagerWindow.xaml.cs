@@ -23,13 +23,13 @@ namespace Homework11_WPF.Views
         public ManagerWindow()
         {
             InitializeComponent();
-            DataContext = this;
+            
             ShowDataManager();
         }
 
         public ObservableCollection<Manager> peopleList { get; set; }
 
-        void ShowDataManager()
+        private void ShowDataManager()
         {
             //Manager manager = new Manager();
             peopleList = new ObservableCollection<Manager>();
@@ -64,12 +64,17 @@ namespace Homework11_WPF.Views
                         }
 
                         if (childnode == "PassportData")
-                            manager[i].PassportData(xnode.ChildNodes[i].InnerText);
+                        {
+                            if (xnode.ChildNodes[i].InnerText != "")
+                                manager[i].GetPassportData(xnode.ChildNodes[i].InnerText);
+                        }
                     }
 
                     foreach (Manager clientData in manager)
+                    {
                         peopleList.Add(clientData);
-
+                    }
+                    listViewPerson.ItemsSource = peopleList;
                 }
             }
         }

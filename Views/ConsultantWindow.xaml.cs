@@ -53,8 +53,9 @@ namespace Homework11_WPF.Views
 
                     if (PassportDataPersone.Value != "")
                     {
-                        PassportDataStringResult = consultant.PassportData(PassportDataPersone.Value);
+                        PassportDataStringResult = consultant.GetPassportData(PassportDataPersone.Value);
                     }
+
                     XElement? PhoneNumberPersone = person.Element("MobilePhone");
                     if (PhoneNumberPersone.Value != "")
                     {

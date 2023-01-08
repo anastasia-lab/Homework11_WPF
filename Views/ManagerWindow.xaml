@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Homework11_WPF"
         mc:Ignorable="d"
         Title="Менеджер" Height="450" Width="850" WindowStartupLocation="CenterScreen">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="176*"/>
@@ -16,15 +17,35 @@
             <ColumnDefinition Width="124*"/>
             <ColumnDefinition Width="193*"/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="listViewPerson" Margin="0,0,0,4" ItemsSource="{Binding Path=peopleList}">
+
+        <ListView x:Name="listViewPerson" Margin="0,0,0,4" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path = Surname}" Header="Фамилия" Width="150"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path = FirstName}" Header="Имя" Width="150"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path = LastName}" Header="Отчество" Width="200"></GridViewColumn>
+                    <GridViewColumn Header="Фамилия" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Surname}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Имя" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=FirstName}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Отчество" Width="200">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=LastName}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
-           
         </ListView>
 
         <Button x:Name="buttonEdit" 
@@ -37,9 +58,9 @@
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" 
                 Grid.Row="1" 
-                Height="26" 
+                Height="29" 
                 Width="99"
-                Margin="10,27,0,0"/>
+                Margin="10,24,0,0"/>
 
         <Button x:Name="buttonInformation" 
                 Content="Сведения" 
@@ -73,7 +94,7 @@
             <Label x:Name="labelPassportData" 
                    Content="Паспорт" 
                    HorizontalAlignment="Left"
-                   Margin="0,8" Height="27"/>
+                   Margin="0,8" Height="30"/>
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Left" Width="120" Margin="6,0,0,0">
@@ -81,8 +102,8 @@
             <TextBox x:Name="textBoxSurname" 
                      HorizontalAlignment="Left"
                      TextWrapping="Wrap" 
-                     Width="120" 
-                     Height="22"
+                     Width="120"
+                     Height="19"
                      Margin="0,2"
                      Text="{Binding ElementName=listViewPerson, Path=SelectedItem.Surname}"/>
 
@@ -91,6 +112,7 @@
                      TextWrapping="Wrap"
                      VerticalAlignment="Top" 
                      Width="120"
+                     Height="19"
                      Margin="0,15"
                      Text="{Binding ElementName=listViewPerson, Path=SelectedItem.FirstName}"/>
 
@@ -99,20 +121,21 @@
                      TextWrapping="Wrap" 
                      VerticalAlignment="Top" 
                      Width="120"
+                     Height="19"
                      Text="{Binding ElementName=listViewPerson, Path=SelectedItem.LastName}"/>
 
             <TextBox x:Name="textBoxPhoneNumber"
                      TextWrapping="Wrap" 
                      Width="120"
+                     Height="19"
                      Margin="0,22"
                      Text="{Binding ElementName=listViewPerson, Path=SelectedItem.PhoneNumber}"/>
-
             <TextBox x:Name="textBoxPassportData" 
                      IsReadOnly="True" 
                      TextWrapping="Wrap" 
                      Width="120" 
-                     Height="20"
-                     Text="{Binding ElementName=listViewPerson, Path=SelectedItem.PassportData}"/>
+                     Height="19"
+                     Text="{Binding SelectedItem.PassportData, ElementName=listViewPerson}"/>
         </StackPanel>
     </Grid>
 </Window>

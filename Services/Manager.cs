@@ -6,7 +6,7 @@ namespace Homework11_WPF
 {
    public class Manager : Worker
     {
-        //public override string Surname { get; set; }
+        private string passport;
         public Manager()
         {
         }
