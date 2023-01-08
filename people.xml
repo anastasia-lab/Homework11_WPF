@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<People>
+  <Person>
+    <Surname>Петров</Surname>
+    <FirstName>Иван</FirstName>
+    <LastName>Иванович</LastName>
+    <PassportData>7954 1865423</PassportData>
+    <MobilePhone></MobilePhone> 
+  </Person>
+  <Person>
+    <Surname>Иванов</Surname>
+    <FirstName>Сергей</FirstName>
+    <LastName>Петрович</LastName>
+    <PassportData>1234 567895</PassportData>
+    <MobilePhone>569</MobilePhone> 
+  </Person>
+  <Person>
+    <Surname>Смирнов</Surname>
+    <FirstName>Василий</FirstName>
+    <LastName>Андреевич</LastName>
+    <PassportData>1569 569874</PassportData>
+    <MobilePhone>195</MobilePhone> 
+  </Person>
+  <Person>
+    <Surname>Тихомиров</Surname>
+    <FirstName>Анатолий</FirstName>
+    <LastName>Игоревич</LastName>
+    <PassportData>8914 530810</PassportData>
+    <MobilePhone>650</MobilePhone> 
+  </Person>
+</People>
