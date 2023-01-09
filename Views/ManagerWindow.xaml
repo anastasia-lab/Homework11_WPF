@@ -18,35 +18,33 @@
             <ColumnDefinition Width="193*"/>
         </Grid.ColumnDefinitions>
 
-        <ListView x:Name="listViewPerson" Margin="0,0,0,4" >
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Фамилия" Width="150">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Surname}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+        <DataGrid x:Name="dataGridPerson" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Фамилия" Width="190">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Surname}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
-                    <GridViewColumn Header="Имя" Width="150">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=FirstName}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                <DataGridTemplateColumn Header="Имя" Width="190">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=FirstName}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
-                    <GridViewColumn Header="Отчество" Width="200">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=LastName}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+                <DataGridTemplateColumn Header="Отчество" Width="190">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=LastName}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
 
         <Button x:Name="buttonEdit" 
                 Content="Изменить"
@@ -105,7 +103,7 @@
                      Width="120"
                      Height="19"
                      Margin="0,2"
-                     Text="{Binding ElementName=listViewPerson, Path=SelectedItem.Surname}"/>
+                     Text="{Binding ElementName=dataGridPerson, Path=SelectedItem.Surname}"/>
 
             <TextBox x:Name="textBoxFirstName" 
                      HorizontalAlignment="Left"
@@ -114,7 +112,7 @@
                      Width="120"
                      Height="19"
                      Margin="0,15"
-                     Text="{Binding ElementName=listViewPerson, Path=SelectedItem.FirstName}"/>
+                     Text="{Binding ElementName=dataGridPerson, Path=SelectedItem.FirstName}"/>
 
             <TextBox x:Name="textBoxLastName" 
                      HorizontalAlignment="Left" 
@@ -122,20 +120,20 @@
                      VerticalAlignment="Top" 
                      Width="120"
                      Height="19"
-                     Text="{Binding ElementName=listViewPerson, Path=SelectedItem.LastName}"/>
+                     Text="{Binding ElementName=dataGridPerson, Path=SelectedItem.LastName}"/>
 
             <TextBox x:Name="textBoxPhoneNumber"
                      TextWrapping="Wrap" 
                      Width="120"
                      Height="19"
                      Margin="0,22"
-                     Text="{Binding ElementName=listViewPerson, Path=SelectedItem.PhoneNumber}"/>
+                     Text="{Binding ElementName=dataGridPerson, Path=SelectedItem.PhoneNumber}"/>
             <TextBox x:Name="textBoxPassportData" 
                      IsReadOnly="True" 
                      TextWrapping="Wrap" 
                      Width="120" 
                      Height="19"
-                     Text="{Binding SelectedItem.PassportData, ElementName=listViewPerson}"/>
+                     Text="{Binding SelectedItem.dataGridPerson, ElementName=listViewPerson}"/>
         </StackPanel>
     </Grid>
 </Window>

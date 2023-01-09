@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.Xml;
+using System.IO;
 
 namespace Homework11_WPF.Views
 {
@@ -20,18 +21,28 @@ namespace Homework11_WPF.Views
     /// </summary>
     public partial class ManagerWindow : Window
     {
+        public ObservableCollection<Manager> peopleList { get; set; }
         public ManagerWindow()
         {
             InitializeComponent();
-            
-            ShowDataManager();
+
+            GetShowDataPerson();
         }
 
-        public ObservableCollection<Manager> peopleList { get; set; }
-
-        private void ShowDataManager()
+        /// <summary>
+        /// вывод данных в DataGrid
+        /// </summary>
+        private void GetShowDataPerson()
         {
-            //Manager manager = new Manager();
+            GetReadXmlFile();
+            dataGridPerson.ItemsSource = peopleList;
+        }
+
+        /// <summary>
+        /// Чтение xml файла
+        /// </summary>
+        private void GetReadXmlFile()
+        {
             peopleList = new ObservableCollection<Manager>();
 
             XmlDocument xDoc = new XmlDocument();
@@ -50,10 +61,10 @@ namespace Homework11_WPF.Views
 
                         if (childnode == "Surname")
                             manager[i].Surname = xnode.ChildNodes[i].InnerText;
-                        
+
                         if (childnode == "FirstName")
                             manager[i].FirstName = xnode.ChildNodes[i].InnerText;
-                        
+
                         if (childnode == "LastName")
                             manager[i].LastName = xnode.ChildNodes[i].InnerText;
 
@@ -71,12 +82,10 @@ namespace Homework11_WPF.Views
                     }
 
                     foreach (Manager clientData in manager)
-                    {
                         peopleList.Add(clientData);
-                    }
-                    listViewPerson.ItemsSource = peopleList;
                 }
             }
+        
         }
     }
 
