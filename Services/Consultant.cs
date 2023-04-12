@@ -4,13 +4,19 @@ using System.Text;
 
 namespace Homework11_WPF
 {
+    [Serializable]
    public class Consultant : Worker
    {
+        string Passport;
         /// <summary>
         /// Срздание консультанта
         /// </summary>
         public Consultant()
         { }
+        public Consultant(string passport)
+        { 
+        Passport = passport;
+        }
 
         /// <summary>
         /// Просмотр паспортных данных

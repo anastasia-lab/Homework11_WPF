@@ -7,81 +7,103 @@
         mc:Ignorable="d"
         Title="Консультант" Height="395" Width="741" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Label x:Name="labelSurname" 
-               Content="Фамилия" 
-               HorizontalAlignment="Left" 
-               Margin="26,22,0,0" 
-               VerticalAlignment="Top"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="176*"/>
+            <RowDefinition Height="41*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="583*"/>
+            <ColumnDefinition Width="124*"/>
+            <ColumnDefinition Width="193*"/>
+        </Grid.ColumnDefinitions>
 
-        <Label x:Name="labelFirstName" 
-               Content="Имя" 
-               HorizontalAlignment="Left" 
-               Margin="26,53,0,0" 
-               VerticalAlignment="Top"/>
+        <DataGrid x:Name="dataGridConsultantPerson" AutoGenerateColumns="True">
+            
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Фамилия" Width="190" Binding="{Binding Path=Surname, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Имя" Width="190" Binding="{Binding Path=FirstName, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Отчество" Width="190" Binding="{Binding Path=LastName, Mode=OneWay}"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
-        <Label x:Name="labelLastName" 
-               Content="Отчество" 
-               HorizontalAlignment="Left" 
-               Margin="26,92,0,0" 
-               VerticalAlignment="Top"/>
+        <StackPanel Grid.Row="0" 
+                    Grid.Column="1" 
+                    Orientation="Vertical" 
+                    Grid.ColumnSpan="2">
+            
+            <Label x:Name="labelSurname" 
+                   Content="Фамилия" 
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Top"/>
 
-        <Label x:Name="labelPhoneNumber" 
-               Content="Номер телефона"
-               HorizontalAlignment="Left"
-               Margin="26,130,0,0"
-               VerticalAlignment="Top"/>
+            <Label x:Name="labelFirstName" 
+                   Content="Имя" 
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Top"
+                   Margin="0,10"/>
 
-        <Label x:Name="labelPassportData" 
-               Content="Паспорт" 
-               HorizontalAlignment="Left"
-               Margin="26,173,0,0"
-               VerticalAlignment="Top"/>
+            <Label x:Name="labelLastName" 
+                   Content="Отчество" 
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Top"/>
 
-        <TextBox x:Name="textBoxSurname" 
-                 IsReadOnly="True" 
-                 HorizontalAlignment="Left"
-                 Margin="134,30,0,0" 
-                 TextWrapping="Wrap" 
-                 VerticalAlignment="Top" 
-                 Width="120"/>
+            <Label x:Name="labelPhoneNumber" 
+                   Content="Номер телефона"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,10"/>
 
-        <TextBox x:Name="textBoxFirstName" 
-                 IsReadOnly="True"  
-                 HorizontalAlignment="Left"
-                 Margin="134,66,0,0" 
-                 TextWrapping="Wrap"
-                 VerticalAlignment="Top" 
-                 Width="120"/>
+            <Label x:Name="labelPassportData" 
+                   Content="Паспорт" 
+                   HorizontalAlignment="Left"
+                   Margin="0,8" Height="30"/>
+        </StackPanel>
 
-        <TextBox x:Name="textBoxLastName" 
-                 IsReadOnly="True" 
-                 HorizontalAlignment="Left" 
-                 Margin="134,100,0,0" 
-                 TextWrapping="Wrap" 
-                 VerticalAlignment="Top" 
-                 Width="120"/>
+        <StackPanel Grid.Row="0" 
+                    Grid.Column="2" 
+                    Orientation="Vertical" 
+                    HorizontalAlignment="Left" 
+                    Width="120" 
+                    Margin="6,0,0,0">
 
-        <TextBox x:Name="textBoxPhoneNumber" 
-                 HorizontalAlignment="Left"
-                 Margin="134,134,0,0" 
-                 TextWrapping="Wrap"
-                 VerticalAlignment="Top" 
-                 Width="120"/>
+            <TextBox x:Name="textBoxSurname" 
+                     HorizontalAlignment="Left"
+                     TextWrapping="Wrap" 
+                     Width="120"
+                     Height="19"
+                     Margin="0,2"
+                     Text="{Binding ElementName=dataGridConsultantPerson, Path=SelectedItem.Surname}"/>
 
-        <TextBox x:Name="textBoxPassportData" 
-                 IsReadOnly="True" 
-                 HorizontalAlignment="Left" 
-                 Margin="134,177,0,0" 
-                 TextWrapping="Wrap"
-                 VerticalAlignment="Top" 
-                 Width="120"/>
+            <TextBox x:Name="textBoxFirstName" 
+                     HorizontalAlignment="Left"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Top" 
+                     Width="120"
+                     Height="19"
+                     Margin="0,15"
+                     Text="{Binding ElementName=dataGridConsultantPerson, Path=SelectedItem.FirstName}"/>
 
-        <Label x:Name="labelError"  
-               HorizontalAlignment="Left" 
-               Margin="259,130,0,0"
-               VerticalAlignment="Top" 
-               Width="200"/>
+            <TextBox x:Name="textBoxLastName" 
+                     HorizontalAlignment="Left" 
+                     TextWrapping="Wrap" 
+                     VerticalAlignment="Top" 
+                     Width="120"
+                     Height="19"
+                     Text="{Binding ElementName=dataGridConsultantPerson, Path=SelectedItem.LastName}"/>
 
+            <TextBox x:Name="textBoxPhoneNumber"
+                     TextWrapping="Wrap" 
+                     Width="120"
+                     Height="19"
+                     Margin="0,22"
+                     Text="{Binding ElementName=dataGridConsultantPerson, Path=SelectedItem.PhoneNumber}"/>
+            <TextBox x:Name="textBoxPassportData" 
+                     IsReadOnly="True" 
+                     TextWrapping="Wrap" 
+                     Width="120" 
+                     Height="19"
+                     Text="{Binding SelectedItem.dataGridConsultantPerson, ElementName=GetPassportData}"/>
+        </StackPanel>
 
     </Grid>
 </Window>

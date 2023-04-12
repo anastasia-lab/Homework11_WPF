@@ -20,29 +20,33 @@
 
         <DataGrid x:Name="dataGridPerson" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Фамилия" Width="190">
+                <DataGridTextColumn Header="Фамилия" Width="190" Binding="{Binding Path=Surname, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Имя" Width="190" Binding="{Binding Path=FirstName, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Отчество" Width="190" Binding="{Binding Path=LastName, Mode=OneWay}"/>
+
+                <!--<DataGridTemplateColumn Header="Фамилия" Width="190">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Path=Surname}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                </DataGridTemplateColumn>-->
 
-                <DataGridTemplateColumn Header="Имя" Width="190">
+                <!--<DataGridTemplateColumn Header="Имя" Width="190">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Path=FirstName}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                </DataGridTemplateColumn>-->
 
-                <DataGridTemplateColumn Header="Отчество" Width="190">
+                <!--<DataGridTemplateColumn Header="Отчество" Width="190">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Path=LastName}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                </DataGridTemplateColumn>-->
             </DataGrid.Columns>
         </DataGrid>
 
@@ -133,7 +137,7 @@
                      TextWrapping="Wrap" 
                      Width="120" 
                      Height="19"
-                     Text="{Binding SelectedItem.dataGridPerson, ElementName=listViewPerson}"/>
+                     Text="{Binding SelectedItem.dataGridPerson, ElementName=SelectedItem.GetPassportData}"/>
         </StackPanel>
     </Grid>
 </Window>

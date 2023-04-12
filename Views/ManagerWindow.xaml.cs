@@ -35,7 +35,7 @@ namespace Homework11_WPF.Views
         private void GetShowDataPerson()
         {
             GetReadXmlFile();
-            dataGridPerson.ItemsSource = peopleList;
+            
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Homework11_WPF.Views
             {
                 foreach (XmlElement xnode in xRoot)
                 {
-                    Manager[] manager = new Manager[xnode.ChildNodes.Count];
+                   Manager [] manager = new Manager[xnode.ChildNodes.Count];
 
                     for (int i = 0; i < xnode.ChildNodes.Count; i++)
                     {
@@ -83,6 +83,8 @@ namespace Homework11_WPF.Views
 
                     foreach (Manager clientData in manager)
                         peopleList.Add(clientData);
+
+                    dataGridPerson.ItemsSource = peopleList;
                 }
             }
         

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,8 +10,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml;
 using System.Xml.Linq;
-
+using System.Xml.Serialization;
+using System.IO;
 
 namespace Homework11_WPF.Views
 {
@@ -19,6 +22,9 @@ namespace Homework11_WPF.Views
     /// </summary>
     public partial class ConsultantWindow : Window
     {
+        ObservableCollection<Consultant> peopleList { get; set; }
+        ObservableCollection<Consultant> collection { get; set; }
+
         public ConsultantWindow()
         {
             InitializeComponent();
@@ -27,57 +33,29 @@ namespace Homework11_WPF.Views
 
         void ShowPersonData()
         {
-            Consultant consultant = new Consultant();
-            string PassportDataStringResult = "";
-            double PhoneNumberResult = 0;
-
-            XDocument xDocument = XDocument.Load("people.xml");
-            XElement? people = xDocument.Element("People");
-            
-            List<Consultant> peopleList = new List<Consultant>();
-            
-            if (!(people is null))
+            collection = new ObservableCollection<Consultant>();
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Consultant[]));
+            using (FileStream fs = new FileStream("people.xml", FileMode.Open))
             {
-                foreach (XElement person in people.Elements("Person"))
+                Consultant[] consultants = (Consultant[])xmlSerializer.Deserialize(fs);
+
+                if (consultants != null)
                 {
-                    XElement? SurnamePersone = person.Element("Surname");
-                    consultant.Surname = SurnamePersone.Value;
-                    
-                    XElement? FirstNamePersone = person.Element("FirstName");
-                    consultant.FirstName = FirstNamePersone.Value;
-
-                    XElement? LastNamePersone = person.Element("LastName");
-                    consultant.LastName = LastNamePersone.Value;
-
-                    XElement? PassportDataPersone = person.Element("PassportData");
-
-                    if (PassportDataPersone.Value != "")
+                    for (int i = 0; i < consultants.Length; i++)
                     {
-                        PassportDataStringResult = consultant.GetPassportData(PassportDataPersone.Value);
-                    }
-
-                    XElement? PhoneNumberPersone = person.Element("MobilePhone");
-                    if (PhoneNumberPersone.Value != "")
-                    {
-                        consultant.PhoneNumber = double.Parse(PhoneNumberPersone.Value);
-                        PhoneNumberResult = consultant.PhoneNumber;
+                        foreach (Consultant consultant in consultants)
+                        {
+                            consultants[i].FirstName = consultant.FirstName;
+                        }
                     }
                 }
 
-                peopleList.Add(consultant);
-            }
+                foreach (Consultant consultant1 in consultants)
+                    collection.Add(consultant1);
 
-            textBoxSurname.Text = consultant.Surname;
-            textBoxFirstName.Text = consultant.FirstName;
-            textBoxLastName.Text = consultant.LastName;
-            textBoxPassportData.Text = PassportDataStringResult;
-
-            if (PhoneNumberResult == 0)
-            {
-                labelError.Content = "Введите номер телефона";
-                labelError.Foreground = Brushes.Red;
+                dataGridConsultantPerson.ItemsSource = collection;
+                
             }
-            else textBoxPhoneNumber.Text = consultant.PhoneNumber.ToString();
         }
     }
 }
