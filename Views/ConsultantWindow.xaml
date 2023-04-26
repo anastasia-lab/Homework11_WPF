@@ -17,12 +17,11 @@
             <ColumnDefinition Width="193*"/>
         </Grid.ColumnDefinitions>
 
-        <DataGrid x:Name="dataGridConsultantPerson" AutoGenerateColumns="True">
-            
+        <DataGrid x:Name="dataGridConsultantPerson" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Фамилия" Width="190" Binding="{Binding Path=Surname, Mode=OneWay}"/>
-                <DataGridTextColumn Header="Имя" Width="190" Binding="{Binding Path=FirstName, Mode=OneWay}"/>
-                <DataGridTextColumn Header="Отчество" Width="190" Binding="{Binding Path=LastName, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Фамилия" Width="150" Binding="{Binding Path=Surname, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Имя" Width="150" Binding="{Binding Path=FirstName, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Отчество" Width="150" Binding="{Binding Path=LastName, Mode=OneWay}"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -30,7 +29,7 @@
                     Grid.Column="1" 
                     Orientation="Vertical" 
                     Grid.ColumnSpan="2">
-            
+
             <Label x:Name="labelSurname" 
                    Content="Фамилия" 
                    HorizontalAlignment="Left" 
@@ -71,7 +70,8 @@
                      TextWrapping="Wrap" 
                      Width="120"
                      Height="19"
-                     Margin="0,2"
+                     Margin="0,2" 
+                     IsReadOnly="True"
                      Text="{Binding ElementName=dataGridConsultantPerson, Path=SelectedItem.Surname}"/>
 
             <TextBox x:Name="textBoxFirstName" 
@@ -81,6 +81,7 @@
                      Width="120"
                      Height="19"
                      Margin="0,15"
+                     IsReadOnly="True"
                      Text="{Binding ElementName=dataGridConsultantPerson, Path=SelectedItem.FirstName}"/>
 
             <TextBox x:Name="textBoxLastName" 
@@ -89,6 +90,7 @@
                      VerticalAlignment="Top" 
                      Width="120"
                      Height="19"
+                     IsReadOnly="True"
                      Text="{Binding ElementName=dataGridConsultantPerson, Path=SelectedItem.LastName}"/>
 
             <TextBox x:Name="textBoxPhoneNumber"
@@ -96,14 +98,36 @@
                      Width="120"
                      Height="19"
                      Margin="0,22"
+                     IsReadOnly="True" 
                      Text="{Binding ElementName=dataGridConsultantPerson, Path=SelectedItem.PhoneNumber}"/>
             <TextBox x:Name="textBoxPassportData" 
                      IsReadOnly="True" 
                      TextWrapping="Wrap" 
                      Width="120" 
                      Height="19"
-                     Text="{Binding SelectedItem.dataGridConsultantPerson, ElementName=GetPassportData}"/>
+                     Text="{Binding ElementName=dataGridConsultantPerson, Path=SelectedItem.PasportData}"/>
         </StackPanel>
-
+        
+        <Button x:Name="ButtonAdd" 
+                Content="Добавить" 
+                HorizontalAlignment="Left" 
+                Margin="20,0,0,0" 
+                Grid.Row="1" 
+                VerticalAlignment="Center" 
+                Height="30" 
+                Width="91"/>
+        
+        <Button x:Name="ButtonEdit" 
+                Content="Изменить" 
+                HorizontalAlignment="Left" 
+                Margin="154,0,0,0"
+                Grid.Row="1" 
+                VerticalAlignment="Center" 
+                Height="30"
+                Width="91"/>
+        <ListBox Grid.ColumnSpan="3" 
+                 Margin="480,307,0,0" 
+                 Grid.RowSpan="2">
+        </ListBox>
     </Grid>
 </Window>

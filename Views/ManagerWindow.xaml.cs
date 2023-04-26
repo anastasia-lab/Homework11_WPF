@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.Xml;
 using System.IO;
+using System.Linq;
 
 namespace Homework11_WPF.Views
 {
@@ -21,73 +22,59 @@ namespace Homework11_WPF.Views
     /// </summary>
     public partial class ManagerWindow : Window
     {
-        public ObservableCollection<Manager> peopleList { get; set; }
+        private ObservableCollection<Manager> peopleList { get; set; }
         public ManagerWindow()
         {
             InitializeComponent();
-
-            GetShowDataPerson();
-        }
-
-        /// <summary>
-        /// вывод данных в DataGrid
-        /// </summary>
-        private void GetShowDataPerson()
-        {
-            GetReadXmlFile();
-            
+            ShowPersonData();
         }
 
         /// <summary>
         /// Чтение xml файла
         /// </summary>
-        private void GetReadXmlFile()
+        private void ShowPersonData()
         {
+            XDocument xDocument = XDocument.Load("people.xml");
+            XElement? people = xDocument.Element("People");
+
             peopleList = new ObservableCollection<Manager>();
+            int index = (from xelement in xDocument.Root.Descendants("Person") select xelement).Count(); //подсчет количества дочерних узлов в "Person"
+            Manager[] manager = new Manager[index];
 
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.Load("people.xml");
-            XmlElement? xRoot = xDoc.DocumentElement;
-            if (xRoot != null)
+            if (!(people is null))
             {
-                foreach (XmlElement xnode in xRoot)
+                foreach (XElement person in people.Elements("Person"))
                 {
-                   Manager [] manager = new Manager[xnode.ChildNodes.Count];
-
-                    for (int i = 0; i < xnode.ChildNodes.Count; i++)
+                    for (int i = 0; i < 1; i++)
                     {
                         manager[i] = new Manager();
-                        string childnode = xnode.ChildNodes[i].Name;
+                        XElement? SurnamePersone = person.Element("Surname");
+                        manager[i].Surname = SurnamePersone.Value;
 
-                        if (childnode == "Surname")
-                            manager[i].Surname = xnode.ChildNodes[i].InnerText;
+                        XElement? FirstNamePersone = person.Element("FirstName");
+                        manager[i].FirstName = FirstNamePersone.Value;
 
-                        if (childnode == "FirstName")
-                            manager[i].FirstName = xnode.ChildNodes[i].InnerText;
+                        XElement? LastNamePersone = person.Element("LastName");
+                        manager[i].LastName = LastNamePersone.Value;
 
-                        if (childnode == "LastName")
-                            manager[i].LastName = xnode.ChildNodes[i].InnerText;
+                        XElement? PasportDataPersone = person.Element("PassportData");
 
-                        if (childnode == "MobilePhone")
+                        if (PasportDataPersone.Value != "")
                         {
-                            if (xnode.ChildNodes[i].InnerText != "")
-                                manager[i].PhoneNumber = double.Parse(xnode.ChildNodes[i].InnerText);
+                            manager[i].PasportData = PasportDataPersone.Value;
                         }
 
-                        if (childnode == "PassportData")
+                        XElement? PhoneNumberPersone = person.Element("MobilePhone");
+                        if (PhoneNumberPersone.Value != "")
                         {
-                            if (xnode.ChildNodes[i].InnerText != "")
-                                manager[i].GetPassportData(xnode.ChildNodes[i].InnerText);
+                            manager[i].PhoneNumber = double.Parse(PhoneNumberPersone.Value);
                         }
+
+                        peopleList.Add(manager[i]);
                     }
-
-                    foreach (Manager clientData in manager)
-                        peopleList.Add(clientData);
-
-                    dataGridPerson.ItemsSource = peopleList;
                 }
             }
-        
+            dataGridManagerPerson.ItemsSource = peopleList;
         }
     }
 

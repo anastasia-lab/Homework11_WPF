@@ -14,6 +14,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.IO;
+using System.Linq;
 
 namespace Homework11_WPF.Views
 {
@@ -22,8 +23,7 @@ namespace Homework11_WPF.Views
     /// </summary>
     public partial class ConsultantWindow : Window
     {
-        ObservableCollection<Consultant> peopleList { get; set; }
-        ObservableCollection<Consultant> collection { get; set; }
+        private ObservableCollection<Consultant> peopleList { get; set; }
 
         public ConsultantWindow()
         {
@@ -31,31 +31,49 @@ namespace Homework11_WPF.Views
             ShowPersonData();
         }
 
-        void ShowPersonData()
-        {
-            collection = new ObservableCollection<Consultant>();
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Consultant[]));
-            using (FileStream fs = new FileStream("people.xml", FileMode.Open))
-            {
-                Consultant[] consultants = (Consultant[])xmlSerializer.Deserialize(fs);
+       private void ShowPersonData()
+       {
+            XDocument xDocument = XDocument.Load("people.xml");
+            XElement? people = xDocument.Element("People");
 
-                if (consultants != null)
+            peopleList = new ObservableCollection<Consultant>();
+            int index = (from xelement in xDocument.Root.Descendants("Person") select xelement).Count(); //подсчет количества дочерних узлов в "Person"
+            Consultant[] consultant = new Consultant[index];
+
+            if (!(people is null))
+            {
+                foreach (XElement person in people.Elements("Person"))
                 {
-                    for (int i = 0; i < consultants.Length; i++)
+                    for (int i = 0; i < 1; i++)
                     {
-                        foreach (Consultant consultant in consultants)
+                        consultant[i] = new Consultant();
+                        XElement? SurnamePersone = person.Element("Surname");
+                        consultant[i].Surname = SurnamePersone.Value;
+
+                        XElement? FirstNamePersone = person.Element("FirstName");
+                        consultant[i].FirstName = FirstNamePersone.Value;
+
+                        XElement? LastNamePersone = person.Element("LastName");
+                        consultant[i].LastName = LastNamePersone.Value;
+
+                        XElement? PassportDataPersone = person.Element("PassportData");
+
+                        if (PassportDataPersone.Value != "")
                         {
-                            consultants[i].FirstName = consultant.FirstName;
+                            consultant[i].PasportData = PassportDataPersone.Value;
                         }
+
+                        XElement? PhoneNumberPersone = person.Element("MobilePhone");
+                        if (PhoneNumberPersone.Value != "")
+                        {
+                            consultant[i].PhoneNumber = double.Parse(PhoneNumberPersone.Value);
+                        }
+
+                        peopleList.Add(consultant[i]);
                     }
                 }
-
-                foreach (Consultant consultant1 in consultants)
-                    collection.Add(consultant1);
-
-                dataGridConsultantPerson.ItemsSource = collection;
-                
             }
+            dataGridConsultantPerson.ItemsSource = peopleList;
         }
     }
 }

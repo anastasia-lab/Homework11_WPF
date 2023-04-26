@@ -7,28 +7,25 @@ namespace Homework11_WPF
     [Serializable]
    public class Consultant : Worker
    {
-        string Passport;
+        string _pasportData;
         /// <summary>
         /// Срздание консультанта
         /// </summary>
         public Consultant()
         { }
-        public Consultant(string passport)
+        public Consultant(string pasport)
         { 
-        Passport = passport;
+            _pasportData = pasport;
         }
 
         /// <summary>
         /// Просмотр паспортных данных
         /// </summary>
-        /// <param name="_passportData"> Паспортные данные </param>
+        /// <param name="_pasportData"> Паспортные данные </param>
         /// <returns></returns>
-        public override string GetPassportData(string _passportData)
+        public override string PasportData
         {
-            if(_passportData != "")
-                return "*********";
-
-            return _passportData;
+            get { return "*****"; }
         }
-   }
+    }
 }

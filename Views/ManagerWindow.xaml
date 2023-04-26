@@ -18,59 +18,19 @@
             <ColumnDefinition Width="193*"/>
         </Grid.ColumnDefinitions>
 
-        <DataGrid x:Name="dataGridPerson" AutoGenerateColumns="False">
+        <DataGrid x:Name="dataGridManagerPerson" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Фамилия" Width="190" Binding="{Binding Path=Surname, Mode=OneWay}"/>
-                <DataGridTextColumn Header="Имя" Width="190" Binding="{Binding Path=FirstName, Mode=OneWay}"/>
-                <DataGridTextColumn Header="Отчество" Width="190" Binding="{Binding Path=LastName, Mode=OneWay}"/>
-
-                <!--<DataGridTemplateColumn Header="Фамилия" Width="190">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path=Surname}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>-->
-
-                <!--<DataGridTemplateColumn Header="Имя" Width="190">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path=FirstName}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>-->
-
-                <!--<DataGridTemplateColumn Header="Отчество" Width="190">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path=LastName}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>-->
+                <DataGridTextColumn Header="Фамилия" Width="150" Binding="{Binding Path=Surname, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Имя" Width="150" Binding="{Binding Path=FirstName, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Отчество" Width="150" Binding="{Binding Path=LastName, Mode=OneWay}"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="buttonEdit" 
-                Content="Изменить"
-                Margin="305,24,162,29" 
-                Grid.Row="1"/>
+        <StackPanel Grid.Row="0" 
+                    Grid.Column="1" 
+                    Orientation="Vertical" 
+                    Grid.ColumnSpan="2">
 
-        <Button x:Name="buttonAdd" 
-                Content="Добавить" 
-                HorizontalAlignment="Left" 
-                VerticalAlignment="Top" 
-                Grid.Row="1" 
-                Height="29" 
-                Width="99"
-                Margin="10,24,0,0"/>
-
-        <Button x:Name="buttonInformation" 
-                Content="Сведения" 
-                Grid.Row="1" 
-                Height="29" 
-                Margin="157,24,303,29"/>
-
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Grid.ColumnSpan="2">
             <Label x:Name="labelSurname" 
                    Content="Фамилия" 
                    HorizontalAlignment="Left" 
@@ -99,7 +59,12 @@
                    Margin="0,8" Height="30"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Left" Width="120" Margin="6,0,0,0">
+        <StackPanel Grid.Row="0" 
+                    Grid.Column="2" 
+                    Orientation="Vertical" 
+                    HorizontalAlignment="Left" 
+                    Width="120" 
+                    Margin="6,0,0,0">
 
             <TextBox x:Name="textBoxSurname" 
                      HorizontalAlignment="Left"
@@ -107,7 +72,7 @@
                      Width="120"
                      Height="19"
                      Margin="0,2"
-                     Text="{Binding ElementName=dataGridPerson, Path=SelectedItem.Surname}"/>
+                     Text="{Binding ElementName=dataGridManagerPerson, Path=SelectedItem.Surname}"/>
 
             <TextBox x:Name="textBoxFirstName" 
                      HorizontalAlignment="Left"
@@ -116,7 +81,7 @@
                      Width="120"
                      Height="19"
                      Margin="0,15"
-                     Text="{Binding ElementName=dataGridPerson, Path=SelectedItem.FirstName}"/>
+                     Text="{Binding ElementName=dataGridManagerPerson, Path=SelectedItem.FirstName}"/>
 
             <TextBox x:Name="textBoxLastName" 
                      HorizontalAlignment="Left" 
@@ -124,20 +89,20 @@
                      VerticalAlignment="Top" 
                      Width="120"
                      Height="19"
-                     Text="{Binding ElementName=dataGridPerson, Path=SelectedItem.LastName}"/>
+                     Text="{Binding ElementName=dataGridManagerPerson, Path=SelectedItem.LastName}"/>
 
             <TextBox x:Name="textBoxPhoneNumber"
                      TextWrapping="Wrap" 
                      Width="120"
                      Height="19"
                      Margin="0,22"
-                     Text="{Binding ElementName=dataGridPerson, Path=SelectedItem.PhoneNumber}"/>
+                     Text="{Binding ElementName=dataGridManagerPerson, Path=SelectedItem.PhoneNumber}"/>
             <TextBox x:Name="textBoxPassportData" 
                      IsReadOnly="True" 
                      TextWrapping="Wrap" 
                      Width="120" 
                      Height="19"
-                     Text="{Binding SelectedItem.dataGridPerson, ElementName=SelectedItem.GetPassportData}"/>
+                     Text="{Binding SelectedItem.dataGridManagerPerson, ElementName=GetPassportData}"/>
         </StackPanel>
     </Grid>
 </Window>
