@@ -1,0 +1,20 @@
+﻿<Window x:Class="Homework11_WPF.Views.InformationData"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Homework11_WPF.Views"
+        mc:Ignorable="d"
+        Title="Сведения" Height="400" Width="650" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <ListView x:Name="list" Height="430">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="190">Дата и время</GridViewColumn>
+                    <GridViewColumn Width="190">Кто изменил</GridViewColumn>
+                    <GridViewColumn Width="190">Что изменили</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
