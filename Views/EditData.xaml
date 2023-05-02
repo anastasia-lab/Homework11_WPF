@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Homework11_WPF.Views"
         mc:Ignorable="d"
-        Title="Изменить" Height="300" Width="400" WindowStartupLocation="CenterScreen">
+        Title="Изменить" Height="280" Width="400" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="147*"/>
@@ -100,7 +100,7 @@
         
         <StackPanel Grid.Row="1"
                     Grid.Column="0" 
-                    Margin="0,0,0,214">
+                    Margin="0,0,0,238">
             <Button x:Name="buttonSave" 
                     Content="Сохранить"/>
         </StackPanel>

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Homework11_WPF.Services;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Homework11_WPF
 {
     [Serializable]
-   public class Consultant : Worker
+   public class Consultant : Worker, IClient
    {
         string _pasportData;
         /// <summary>
@@ -19,7 +20,7 @@ namespace Homework11_WPF
         }
 
         /// <summary>
-        /// Просмотр паспортных данных
+        /// Замена паспортных данных на *****
         /// </summary>
         /// <param name="_pasportData"> Паспортные данные </param>
         /// <returns></returns>

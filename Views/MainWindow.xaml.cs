@@ -24,82 +24,54 @@ namespace Homework11_WPF.Views
     public partial class MainWindow : Window
     {
         private ObservableCollection<Worker> peopleList { get; set; }
+        private Consultant consultant = new Consultant();
+        private Manager manager = new Manager();
 
         public MainWindow()
         {
             InitializeComponent();
+
+            ButtonAdd.Visibility = Visibility.Hidden;
+            ButtonEdit.Visibility = Visibility.Hidden;
+            buttonInformation.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// Выбор вида пользователя (менеджер или консультант)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxChoice_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBoxItem _comboBoxItem = (ComboBoxItem)comboBoxChoice.SelectedItem;
-            string _equalValue = _comboBoxItem.Content.ToString();
+            string _equalValue = _comboBoxItem.Content.ToString(); //выбранное значение в ComboBox
 
             XDocument xDocument = XDocument.Load("people.xml");
+            peopleList = new ObservableCollection<Worker>();
 
             if (_equalValue == "Консультант")
             {
-                ReadXmlFile(xDocument,_equalValue);
+                consultant.ReadXmlFile(xDocument, _equalValue, peopleList);
+                dataGridListPerson.ItemsSource = peopleList;
+
+                ButtonAdd.Visibility = Visibility.Hidden;
+                ButtonEdit.Visibility = Visibility.Visible;
+                buttonInformation.Visibility = Visibility.Visible;
             }
             if (_equalValue == "Менеджер")
             {
-                ReadXmlFile(xDocument,_equalValue);
+                manager.ReadXmlFile(xDocument, _equalValue, peopleList);
+                dataGridListPerson.ItemsSource = peopleList;
+
+                ButtonAdd.Visibility = Visibility.Visible;
+                ButtonEdit.Visibility = Visibility.Visible;
+                buttonInformation.Visibility = Visibility.Visible;
             }
         }
 
-        private void ReadXmlFile(XDocument xDocument, string equalValue)
+        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            XElement? people = xDocument.Element("People");
 
-            peopleList = new ObservableCollection<Worker>();
-            int index = (from xelement in xDocument.Root.Descendants("Person") select xelement).Count(); //подсчет количества дочерних узлов в "Person"
-
-            if (!(people is null))
-            {
-                bool resultConsultant = equalValue == "Консультант";
-                bool resultManager = equalValue == "Менеджер";
-                Consultant[] consultant = new Consultant[index];
-                Manager[] manager = new Manager[index];
-
-                foreach (XElement person in people.Elements("Person"))
-                {
-                    for (int i = 0; i < 1; i++)
-                    {
-                        XElement? SurnamePersone = person.Element("Surname");
-                        XElement? FirstNamePersone = person.Element("FirstName");
-                        XElement? LastNamePersone = person.Element("LastName");
-                        XElement? PassportDataPersone = person.Element("PassportData");
-                        XElement? PhoneNumberPersone = person.Element("MobilePhone");
-
-                        if (resultConsultant == true)
-                        {
-                            consultant[i] = new Consultant();
-                            consultant[i].Surname = SurnamePersone.Value;
-                            consultant[i].FirstName = FirstNamePersone.Value;
-                            consultant[i].LastName = LastNamePersone.Value;
-                            if (PassportDataPersone.Value != "")
-                                consultant[i].PasportData = PassportDataPersone.Value;
-                            if (PhoneNumberPersone.Value != "")
-                                consultant[i].PhoneNumber = double.Parse(PhoneNumberPersone.Value);
-                            peopleList.Add(consultant[i]);
-                        }
-
-                        if (resultManager == true)
-                        {
-                            manager[i] = new Manager();
-                            manager[i].Surname = SurnamePersone.Value;
-                            manager[i].FirstName = FirstNamePersone.Value;
-                            manager[i].LastName = LastNamePersone.Value;
-                            if (PassportDataPersone.Value != "")
-                                manager[i].PasportData = PassportDataPersone.Value;
-                            if (PhoneNumberPersone.Value != "")
-                                manager[i].PhoneNumber = double.Parse(PhoneNumberPersone.Value);
-                            peopleList.Add(manager[i]);
-                        }
-                    }
-                }
-            }
-            dataGridListPerson.ItemsSource = peopleList;
         }
     }
 }
