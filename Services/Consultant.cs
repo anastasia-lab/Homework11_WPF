@@ -1,26 +1,21 @@
-﻿using Homework11_WPF.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Homework11_WPF
 {
     [Serializable]
-   public class Consultant : Worker, IClient
+   public class Consultant : Worker
    {
-        string _pasportData;
         /// <summary>
-        /// Срздание консультанта
+        /// Создание консультанта
         /// </summary>
         public Consultant()
-        { }
-        public Consultant(string pasport)
-        { 
-            _pasportData = pasport;
-        }
+        {}
 
         /// <summary>
-        /// Замена паспортных данных на *****
+        /// Замена паспортных данных
         /// </summary>
         /// <param name="_pasportData"> Паспортные данные </param>
         /// <returns></returns>

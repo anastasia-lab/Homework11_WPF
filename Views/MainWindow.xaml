@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
 
         <DataGrid x:Name="dataGridListPerson" 
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False" SelectionChanged="dataGridListPerson_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Фамилия" Width="150" Binding="{Binding Path=Surname, Mode=OneWay}"/>
                 <DataGridTextColumn Header="Имя" Width="150" Binding="{Binding Path=FirstName, Mode=OneWay}"/>
@@ -128,7 +128,7 @@
                 Grid.Row="1" 
                 VerticalAlignment="Center" 
                 Height="30"
-                Width="91"/>
+                Width="91" Click="ButtonEdit_Click"/>
         
         <Button x:Name="buttonInformation" 
                 Content="Сведения" 

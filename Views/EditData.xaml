@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Homework11_WPF.Views"
         mc:Ignorable="d"
-        Title="Изменить" Height="280" Width="400" WindowStartupLocation="CenterScreen">
+        Title="Изменить/Добавить" Height="280" Width="400" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="147*"/>
@@ -61,7 +61,6 @@
                      Width="120"
                      Height="19"
                      Margin="0,2" 
-                     IsReadOnly="True"
                      Text=""/>
 
             <TextBox x:Name="textBoxFirstName" 
@@ -71,7 +70,6 @@
                      Width="120"
                      Height="19"
                      Margin="0,15"
-                     IsReadOnly="True"
                      Text=""/>
 
             <TextBox x:Name="textBoxLastName" 
@@ -80,7 +78,6 @@
                      VerticalAlignment="Top" 
                      Width="120"
                      Height="19"
-                     IsReadOnly="True"
                      Text=""/>
 
             <TextBox x:Name="textBoxPhoneNumber"
@@ -88,10 +85,8 @@
                      Width="120"
                      Height="19"
                      Margin="0,22"
-                     IsReadOnly="True" 
                      Text=""/>
             <TextBox x:Name="textBoxPassportData" 
-                     IsReadOnly="True" 
                      TextWrapping="Wrap" 
                      Width="120" 
                      Height="19"
@@ -102,7 +97,7 @@
                     Grid.Column="0" 
                     Margin="0,0,0,238">
             <Button x:Name="buttonSave" 
-                    Content="Сохранить"/>
+                    Content="Сохранить" Click="buttonSave_Click"/>
         </StackPanel>
     </Grid>
 </Window>

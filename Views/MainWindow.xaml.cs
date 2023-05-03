@@ -26,6 +26,7 @@ namespace Homework11_WPF.Views
         private ObservableCollection<Worker> peopleList { get; set; }
         private Consultant consultant = new Consultant();
         private Manager manager = new Manager();
+        private Worker SelectedData { get; set; }
 
         public MainWindow()
         {
@@ -37,10 +38,10 @@ namespace Homework11_WPF.Views
         }
 
         /// <summary>
-        /// Выбор вида пользователя (менеджер или консультант)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+            /// Выбор вида пользователя (менеджер или консультант)
+            /// </summary>
+            /// <param name="sender"></param>
+            /// <param name="e"></param>
         private void comboBoxChoice_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBoxItem _comboBoxItem = (ComboBoxItem)comboBoxChoice.SelectedItem;
@@ -69,9 +70,45 @@ namespace Homework11_WPF.Views
             }
         }
 
+        /// <summary>
+        /// Добавление нового клиента
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
+            EditData editData = new EditData(peopleList);
+            editData.ShowDialog();
+        }
 
+        /// <summary>
+        /// Редактирование данных клиента
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+        {
+            ComboBoxItem _comboBoxItem = (ComboBoxItem)comboBoxChoice.SelectedItem;
+            string _equalValue = _comboBoxItem.Content.ToString(); //выбранное значение в ComboBox
+
+            if (peopleList != null && SelectedData != null)
+            {
+                int index = peopleList.IndexOf(SelectedData);
+                EditData editData = new EditData(peopleList, SelectedData, index, _equalValue);
+                editData.ShowDialog();
+            }
+        }
+
+        /// <summary>
+        /// Выбор клиента, чьи данные необходимо изменить
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridListPerson_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Worker selected = dataGridListPerson.SelectedItem as Worker;
+            if (selected != null)
+                SelectedData = selected;
         }
     }
 }

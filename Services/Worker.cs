@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Homework11_WPF.Services;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Xml.Linq;
 
 namespace Homework11_WPF
 {
-    public class Worker
+    public class Worker: IClient
     {
         public virtual string Surname { get; set; }
         public string FirstName { get; set; }
@@ -71,6 +72,16 @@ namespace Homework11_WPF
             }
 
             return peopleList;
+        }
+
+        /// <summary>
+        /// Изменение номера телефона
+        /// </summary>
+        /// <param name="value"> Новый номер телефона</param>
+        public double GetChangePhoneNumber(double value)
+        {
+            PhoneNumber = value;
+            return PhoneNumber;
         }
     }
 }

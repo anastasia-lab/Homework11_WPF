@@ -6,6 +6,6 @@ namespace Homework11_WPF.Services
 {
     interface IClient
     {
-        public void ChangeTelepnoNumber(int value);
+        public double GetChangePhoneNumber(double value);
     }
 }
