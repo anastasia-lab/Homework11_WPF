@@ -8,8 +8,9 @@
         Title="Изменить/Добавить" Height="280" Width="400" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="147*"/>
-            <ColumnDefinition Width="253*"/>
+            <ColumnDefinition Width="115*"/>
+            <ColumnDefinition Width="152*"/>
+            <ColumnDefinition Width="133*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -92,12 +93,22 @@
                      Height="19"
                      Text=""/>
         </StackPanel>
-        
+
         <StackPanel Grid.Row="1"
                     Grid.Column="0" 
                     Margin="0,0,0,238">
             <Button x:Name="buttonSave" 
                     Content="Сохранить" Click="buttonSave_Click"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="0"
+                    Grid.Column="2">
+            <Label Name="lableInfo" Content="Что изменить:" Height="29" />
+            <CheckBox x:Name="checkBoxSurname" Content="Фамилия"/>
+            <CheckBox x:Name="checkBoxFirstName" Content="Имя"/>
+            <CheckBox x:Name="checkBoxLastName" Content="Отчество"/>
+            <CheckBox x:Name="checkBoxPhoneNumber" Content="Номер телефона"/>
+            <CheckBox x:Name="checkBoxPasportData" Content="Паспорт"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -7,12 +7,13 @@
         mc:Ignorable="d"
         Title="Сведения" Height="400" Width="650" WindowStartupLocation="CenterScreen">
     <Grid>
-        <ListView x:Name="list" Height="430">
+        <ListView x:Name="listLoadedData">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="190">Дата и время</GridViewColumn>
-                    <GridViewColumn Width="190">Кто изменил</GridViewColumn>
-                    <GridViewColumn Width="190">Что изменили</GridViewColumn>
+                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=DateTimeChanged}">Дата и время</GridViewColumn>
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Path=WhoChanged}">Кто изменил</GridViewColumn>
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Path=TypeOfChange}">Тип изменений</GridViewColumn>
+                    <GridViewColumn Width="250" DisplayMemberBinding="{Binding Path=WhatChanged}">Что изменили</GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

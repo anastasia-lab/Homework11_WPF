@@ -102,7 +102,7 @@
                      Margin="0,22"
                      IsReadOnly="True" 
                      Text="{Binding ElementName=dataGridListPerson, Path=SelectedItem.PhoneNumber}"/>
-            
+
             <TextBox x:Name="textBoxPassportData" 
                      IsReadOnly="True" 
                      TextWrapping="Wrap" 
@@ -124,20 +124,22 @@
         <Button x:Name="ButtonEdit" 
                 Content="Изменить" 
                 HorizontalAlignment="Left" 
-                Margin="160,0,0,0"
+                Margin="240,0,0,0"
                 Grid.Row="1" 
                 VerticalAlignment="Center" 
                 Height="30"
-                Width="91" Click="ButtonEdit_Click"/>
-        
+                Width="91" 
+                Click="ButtonEdit_Click"/>
+
         <Button x:Name="buttonInformation" 
                 Content="Сведения" 
                 HorizontalAlignment="Left"
-                Margin="305,0,0,0"
+                Margin="350,0,0,0"
                 Grid.Row="1" 
                 VerticalAlignment="Center"
                 Height="30"
-                Width="91"/>
+                Width="91" 
+                Click="buttonInformation_Click"/>
 
         <ComboBox x:Name="comboBoxChoice" 
                   SelectionChanged="comboBoxChoice_SelectionChanged"
@@ -150,5 +152,14 @@
             <ComboBoxItem Content="Консультант"/>
             <ComboBoxItem Content="Менеджер"/>
         </ComboBox>
+        <Button x:Name="ButtonDelete" 
+            Content="Удалить" 
+            HorizontalAlignment="Left" 
+            Margin="130,0,0,0" 
+            Grid.Row="1" 
+            VerticalAlignment="Center" 
+            Height="30" 
+            Width="91" 
+            Click="ButtonDelete_Click" />
     </Grid>
 </Window>

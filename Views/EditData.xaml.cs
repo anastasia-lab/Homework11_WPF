@@ -33,6 +33,13 @@ namespace Homework11_WPF.Views
         {
             InitializeComponent();
             this.peopleList = _peopleList;
+
+            checkBoxSurname.Visibility = Visibility.Hidden;
+            checkBoxFirstName.Visibility = Visibility.Hidden;
+            checkBoxLastName.Visibility = Visibility.Hidden;
+            checkBoxPasportData.Visibility = Visibility.Hidden;
+            checkBoxPhoneNumber.Visibility = Visibility.Hidden;
+            lableInfo.Visibility = Visibility.Hidden;
         }
 
         public EditData(ObservableCollection<Worker> peopleList, Worker worker, int index, string _equalValue)
@@ -42,14 +49,24 @@ namespace Homework11_WPF.Views
             this.worker = worker;
             this.index = index;
             this.equalValue = _equalValue;
-            GetShowSelectData();
+
+            checkBoxSurname.Visibility = Visibility.Hidden;
+            checkBoxFirstName.Visibility = Visibility.Hidden;
+            checkBoxLastName.Visibility = Visibility.Hidden;
+            checkBoxPasportData.Visibility = Visibility.Hidden;
+            checkBoxPhoneNumber.Visibility = Visibility.Hidden;
+            lableInfo.Visibility = Visibility.Hidden;
+
+            GetShowSelectData(equalValue);
         }
         #endregion
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
             if (peopleList != null && worker != null)
+            {
                 GetEditData();
+            }
 
             if (peopleList != null && worker == null)
                 GetAddNewData();
@@ -61,8 +78,28 @@ namespace Homework11_WPF.Views
         /// <summary>
         /// Загрузка данных
         /// </summary>
-        private void GetShowSelectData()
+        /// <param name="EqualsValue">выбранное значение в ComboBox(консультант или менеджер)</param>
+        private void GetShowSelectData(string EqualsValue)
         {
+            if (EqualsValue == "Консультант")
+            {
+                checkBoxPhoneNumber.Visibility = Visibility.Visible;
+                lableInfo.Visibility = Visibility.Visible;
+                textBoxSurname.IsReadOnly = true;
+                textBoxFirstName.IsReadOnly = true;
+                textBoxLastName.IsReadOnly = true;
+                textBoxPassportData.IsReadOnly = true;
+            }
+            if (EqualsValue == "Менеджер")
+            {
+                checkBoxSurname.Visibility = Visibility.Visible;
+                checkBoxFirstName.Visibility = Visibility.Visible;
+                checkBoxLastName.Visibility = Visibility.Visible;
+                checkBoxPasportData.Visibility = Visibility.Visible;
+                checkBoxPhoneNumber.Visibility = Visibility.Visible;
+                lableInfo.Visibility = Visibility.Visible;
+            }
+
             textBoxSurname.Text = worker.Surname;
             textBoxFirstName.Text = worker.FirstName;
             textBoxLastName.Text = worker.LastName;
@@ -75,14 +112,22 @@ namespace Homework11_WPF.Views
         /// </summary>
         private void GetEditData()
         {
-            XElement save = xDoc.Element("People").Elements("Person").Where(e => e.Element("Surname").Value == textBoxSurname.Text).Single();
+            //XElement save = xDoc.Element("People").Elements("Person").Where(e => e.Element("Surname").Value == textBoxSurname.Text).Single();
 
             if (equalValue == "Консультант")
             {
                 if (peopleList != null && worker != null)
                 {
-                    worker.PhoneNumber = double.Parse(textBoxPhoneNumber.Text);
-                    save.Element("MobilePhone").Value = worker.GetChangePhoneNumber(double.Parse(textBoxPhoneNumber.Text)).ToString();
+                    if ((bool)checkBoxPhoneNumber.IsChecked) 
+                    {
+                        string oldInfo = worker.PhoneNumber.ToString(); //старая информация при редактировании
+
+                        worker.GetChangePhoneNumber(double.Parse(textBoxPhoneNumber.Text));
+                        worker.GetSaveTxtEditData(equalValue,"редактирование",checkBoxPhoneNumber.Content.ToString(), 
+                                                  oldInfo, worker.PhoneNumber.ToString());
+                    } 
+
+                    //save.Element("MobilePhone").Value = worker.GetChangePhoneNumber(double.Parse(textBoxPhoneNumber.Text)).ToString();
                 }
             }
 
@@ -90,15 +135,48 @@ namespace Homework11_WPF.Views
             {
                 if (peopleList != null && worker != null)
                 {
-                    worker.Surname = textBoxSurname.Text;
-                    worker.FirstName = textBoxFirstName.Text;
-                    worker.LastName = textBoxLastName.Text;
-                    worker.PasportData = textBoxPassportData.Text;
-                    worker.PhoneNumber = double.Parse(textBoxPhoneNumber.Text);
+                    string oldInfo; //старая информация при редактировании
+                    if ((bool)checkBoxSurname.IsChecked)
+                    {
+                        oldInfo = worker.Surname;
+                        worker.GetEditSurName(textBoxSurname.Text);
+                        worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxSurname.Content.ToString(),
+                            oldInfo, worker.Surname);
+                    }
+                    if ((bool)checkBoxFirstName.IsChecked)
+                    {
+                        oldInfo = worker.FirstName;
+                        worker.GetEditFirstName(textBoxFirstName.Text);
+                        worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxFirstName.Content.ToString(),
+                            oldInfo, worker.FirstName);
+                    }
+                    if ((bool)checkBoxLastName.IsChecked)
+                    {
+                        oldInfo = worker.LastName;
+                        worker.GetEditLastName(textBoxLastName.Text);
+                        worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxLastName.Content.ToString(),
+                            oldInfo, worker.LastName);
+                    }
+                    if ((bool)checkBoxPasportData.IsChecked)
+                    {
+                        oldInfo = worker.PasportData;
+                        worker.GetEditPasportData(textBoxPassportData.Text);
+                        worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxPasportData.Content.ToString(),
+                            oldInfo, worker.PasportData);
+                    }
+                    if ((bool)checkBoxPhoneNumber.IsChecked)
+                    {
+                        oldInfo = worker.PhoneNumber.ToString();
+                        worker.GetEditPhoneNumber(textBoxPhoneNumber.Text);
+                        worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxPhoneNumber.Content.ToString(),
+                            oldInfo, worker.PhoneNumber.ToString());
+                    }
                 }
             }
 
-            save.Save("people.xml");
+            peopleList.RemoveAt(index);
+            peopleList.Insert(index, worker);
+            //save.Save("people.xml");
         }
 
         /// <summary>
@@ -113,8 +191,11 @@ namespace Homework11_WPF.Views
             double _PhoneNumber = double.Parse(textBoxPhoneNumber.Text);
 
             Manager manager = new Manager(_Surname, _FirstName, _LastName, _PasportData, _PhoneNumber);
+
             manager.GetAddDataOfManager(peopleList, manager);
-            manager.GetSaveNewClient(xDoc);
+            //manager.GetSaveNewClient(xDoc);
+            manager.GetSaveTxtEditData("Менеджер","добавление","Новый клиент", $"{manager.Surname}" + " " + 
+                                        $"{manager.FirstName}" + " " + $"{manager.LastName}","");
         }
         #endregion
     }

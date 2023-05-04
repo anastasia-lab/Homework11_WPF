@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -23,7 +24,7 @@ namespace Homework11_WPF
         /// <param name="equalValue">Вид пользователя (консультант или менеджер)</param>
         /// <param name="peopleList">коллекция данных xml-документа</param>
         /// <returns></returns>
-        public ObservableCollection<Worker> ReadXmlFile(XDocument xDocument, string equalValue, ObservableCollection<Worker> peopleList)
+        internal ObservableCollection<Worker> ReadXmlFile(XDocument xDocument, string equalValue, ObservableCollection<Worker> peopleList)
         {
             XElement? people = xDocument.Element("People");
             int index = (from xelement in xDocument.Root.Descendants("Person") select xelement).Count(); //подсчет количества дочерних узлов в "Person"
@@ -82,6 +83,84 @@ namespace Homework11_WPF
         {
             PhoneNumber = value;
             return PhoneNumber;
+        }
+
+        /// <summary>
+        /// Сохранение изменений данных в отдельном txt-файле
+        /// </summary>
+        /// <param name="value">Кто изменил(менеджер или консультант)</param>
+        /// <param name="infoAboutEdit">Информация об изменении (редактирование/удаление/добавление)</param>
+        /// <param name="infoWhatEdit">Что именно изменили (Имя/Фамилию/Отчество/Номер телефона/Паспорт)</param>
+        internal void GetSaveTxtEditData(string value, string infoAboutEdit, string infoWhatEdit, string oldInformation, string newInformation)
+        {
+            string path = "EditedData.txt";
+            Encoding conding = Encoding.UTF8;
+
+            string ReadLineFile = ""; //чтение отдельных строк из файла
+
+            if (!File.Exists(path))
+            {
+                File.Create(path);
+            }
+
+            using (StreamReader streamReader = new StreamReader(path, conding))
+            {
+                while (!streamReader.EndOfStream)
+                {
+                    ReadLineFile = streamReader.ReadLine();
+                }
+            }
+
+            using (StreamWriter streamWriter = new StreamWriter(path, true, conding))
+            {
+                streamWriter.WriteLine($"{DateTime.Now}#{value}#{infoAboutEdit}#{infoWhatEdit}:" +
+                    $"{oldInformation} -> {newInformation}");
+            }
+        }
+
+        /// <summary>
+        /// Редактирование фамилии
+        /// </summary>
+        /// <param name="newSurName">Новая фамилия</param>
+        internal void GetEditSurName(string newSurName)
+        {
+            this.Surname = newSurName;
+        }
+
+        /// <summary>
+        /// Редактирование имени
+        /// </summary>
+        /// <param name="newFirstName">Новое имя</param>
+        internal void GetEditFirstName(string newFirstName)
+        {
+            this.FirstName = newFirstName;
+        }
+
+        /// <summary>
+        /// Редактирование отчества
+        /// </summary>
+        /// <param name="newLastName">Новое отчество</param>
+        internal void GetEditLastName(string newLastName)
+        {
+            this.LastName = newLastName;
+        }
+
+        /// <summary>
+        /// Редактирование паспортных данных
+        /// </summary>
+        /// <param name="newPasportData">Новые паспортные данные</param>
+        internal void GetEditPasportData(string newPasportData)
+        {
+            this.PasportData = newPasportData;
+        }
+
+        /// <summary>
+        /// Редактирование номера телефона
+        /// </summary>
+        /// <param name="newPhoneNumber">Новый номер телефона</param>
+        internal void GetEditPhoneNumber(string newPhoneNumber)
+        {
+            this.PhoneNumber = double.Parse(newPhoneNumber);
         }
     }
 }
