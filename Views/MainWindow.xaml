@@ -5,8 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Homework11_WPF"
         mc:Ignorable="d"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
         Title="Главное окно" Height="395" Width="741" WindowStartupLocation="CenterScreen">
-    <Grid>
+    
+    <Window.Resources>
+        <!--Стиль для кнопок-->
+        <Style x:Key="BackgroundBotton" TargetType="Button">
+            <Setter Property="Width" Value="101"/>
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Background" Value="#FF45659C"/>
+            <Setter Property="Foreground" Value="GhostWhite"/>
+            <Setter Property="FontFamily" Value="Times New Roman"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" 
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}" 
+                    BorderBrush="{TemplateBinding BorderBrush}" 
+                    CornerRadius="3" 
+                    Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="DarkGray" />
+                                <Setter Property="Foreground" Value="Black" />
+                                <Setter Property="BorderThickness" Value="1,1,2,2" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!--Стиль для текста-->
+        <Style x:Key="TextFont">
+            <Setter Property="ItemsControl.FontFamily" Value="Times New Roman"/>
+            <Setter Property="ItemsControl.FontSize" Value="14"/>
+            <Setter Property="ItemsControl.Foreground" Value="DimGray"/>
+        </Style>
+        
+    </Window.Resources>
+
+    <Grid Background="#b5cef5">
         <Grid.RowDefinitions>
             <RowDefinition Height="176*"/>
             <RowDefinition Height="41*"/>
@@ -18,7 +69,12 @@
         </Grid.ColumnDefinitions>
 
         <DataGrid x:Name="dataGridListPerson" 
-                  AutoGenerateColumns="False" SelectionChanged="dataGridListPerson_SelectionChanged">
+                  AutoGenerateColumns="False" 
+                  SelectionChanged="dataGridListPerson_SelectionChanged"
+                  Margin="0,0,35,0"
+                  FontSize="14"
+                  FontFamily="Times New Roman"
+                  Foreground="Black" Background="#FFBCE6E8">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Фамилия" Width="150" Binding="{Binding Path=Surname, Mode=OneWay}"/>
                 <DataGridTextColumn Header="Имя" Width="150" Binding="{Binding Path=FirstName, Mode=OneWay}"/>
@@ -26,89 +82,117 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Grid.Row="0" 
-                    Orientation="Vertical" 
-                    Grid.ColumnSpan="2" 
-                    Margin="0,50,0,0" 
-                    Grid.Column="1">
+        <Border x:Name="BorderRound"
+                Grid.ColumnSpan="2" 
+                Margin="0,70,0,0" 
+                Grid.Column="1"
+                BorderBrush="#FFD7EEDC"
+                BorderThickness="3,3,3,3"
+                CornerRadius="3,3,3,3">
+            
+            <StackPanel Grid.Row="0" 
+                    x:Name="StackPanelLableInfo"
+                    Orientation="Vertical"
+                    Background="#FFD7EEDC"
+                    >
 
-            <Label x:Name="labelSurname" 
+                <Label x:Name="labelSurname" 
                    Content="Фамилия" 
                    HorizontalAlignment="Left" 
-                   VerticalAlignment="Top"/>
+                   Height="38"
+                   Style="{StaticResource TextFont}"/>
 
-            <Label x:Name="labelFirstName" 
+                <Label x:Name="labelFirstName" 
                    Content="Имя" 
-                   HorizontalAlignment="Left" 
-                   VerticalAlignment="Top"
-                   Margin="0,10"/>
+                   HorizontalAlignment="Left"
+                   Margin="0,10" 
+                   Style="{StaticResource TextFont}"
+                   Height="28"/>
 
-            <Label x:Name="labelLastName" 
+                <Label x:Name="labelLastName" 
                    Content="Отчество" 
                    HorizontalAlignment="Left" 
-                   VerticalAlignment="Top"/>
+                   Style="{StaticResource TextFont}"
+                   Height="41"/>
 
-            <Label x:Name="labelPhoneNumber" 
+                <Label x:Name="labelPhoneNumber" 
                    Content="Номер телефона"
                    HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Margin="0,10"/>
+                   Margin="0,10" 
+                   Style="{StaticResource TextFont}"
+                   Height="27"/>
 
-            <Label x:Name="labelPassportData" 
+                <Label x:Name="labelPassportData" 
                    Content="Паспорт" 
                    HorizontalAlignment="Left"
-                   Margin="0,8" Height="30"/>
-        </StackPanel>
-
+                   Margin="0,8" 
+                   Style="{StaticResource TextFont}"
+                   Height="26"/>
+            </StackPanel>
+        </Border>
         <StackPanel Grid.Row="0" 
                     Grid.Column="2" 
+                    x:Name="StackPanelTextBoxInfo"
                     Orientation="Vertical" 
                     HorizontalAlignment="Left" 
-                    Width="120" 
-                    Margin="6,50,0,10">
+                    Width="139" 
+                    Margin="10,70,0,10">
 
             <TextBox x:Name="textBoxSurname" 
                      HorizontalAlignment="Left"
                      TextWrapping="Wrap" 
-                     Width="120"
-                     Height="16"
+                     Width="138"
+                     Height="26"
                      Margin="0,2" 
                      IsReadOnly="True"
-                     Text="{Binding ElementName=dataGridListPerson, Path=SelectedItem.Surname}"/>
+                     Text="{Binding ElementName=dataGridListPerson, Path=SelectedItem.Surname}"
+                     FontFamily="Times New Roman"
+                     FontSize="14"
+                     Foreground="Black"/>
 
             <TextBox x:Name="textBoxFirstName" 
                      HorizontalAlignment="Left"
-                     TextWrapping="Wrap"
-                     VerticalAlignment="Top" 
-                     Width="120"
-                     Height="19"
+                     TextWrapping="Wrap" 
+                     Width="139"
+                     Height="26"
                      Margin="0,15"
                      IsReadOnly="True"
-                     Text="{Binding ElementName=dataGridListPerson, Path=SelectedItem.FirstName}"/>
+                     Text="{Binding ElementName=dataGridListPerson, Path=SelectedItem.FirstName}"
+                     FontFamily="Times New Roman"
+                     FontSize="14"
+                     Foreground="Black"/>
 
             <TextBox x:Name="textBoxLastName" 
                      HorizontalAlignment="Left" 
                      TextWrapping="Wrap" 
-                     VerticalAlignment="Top" 
-                     Width="120"
-                     Height="19"
+                     Width="138"
+                     Height="29"
                      IsReadOnly="True"
-                     Text="{Binding ElementName=dataGridListPerson, Path=SelectedItem.LastName}"/>
+                     Text="{Binding ElementName=dataGridListPerson, Path=SelectedItem.LastName}"
+                     FontFamily="Times New Roman"
+                     FontSize="14"
+                     Foreground="Black"/>
 
             <TextBox x:Name="textBoxPhoneNumber"
                      TextWrapping="Wrap" 
-                     Width="120"
-                     Height="19"
+                     Width="139"
+                     Height="28"
                      Margin="0,22"
                      IsReadOnly="True" 
-                     Text="{Binding ElementName=dataGridListPerson, Path=SelectedItem.PhoneNumber}"/>
+                     Text="{Binding ElementName=dataGridListPerson, Path=SelectedItem.PhoneNumber}"
+                     FontFamily="Times New Roman"
+                     FontSize="14"
+                     Foreground="Black"/>
 
             <TextBox x:Name="textBoxPassportData" 
                      IsReadOnly="True" 
                      TextWrapping="Wrap" 
-                     Width="120" 
-                     Height="19"
-                     Text="{Binding ElementName=dataGridListPerson, Path=SelectedItem.PasportData}"/>
+                     Width="139" 
+                     Height="22"
+                     Text="{Binding ElementName=dataGridListPerson, Path=SelectedItem.PasportData}"
+                     FontFamily="Times New Roman"
+                     FontSize="14"
+                     Foreground="Black"/>
         </StackPanel>
 
         <Button x:Name="ButtonAdd" 
@@ -117,49 +201,50 @@
                 Margin="20,0,0,0" 
                 Grid.Row="1" 
                 VerticalAlignment="Center" 
-                Height="30" 
-                Width="91" 
+                Style="{StaticResource BackgroundBotton}"
                 Click="ButtonAdd_Click"/>
 
         <Button x:Name="ButtonEdit" 
                 Content="Изменить" 
                 HorizontalAlignment="Left" 
-                Margin="240,0,0,0"
+                Margin="245,0,0,0"
                 Grid.Row="1" 
                 VerticalAlignment="Center" 
-                Height="30"
-                Width="91" 
+                Style="{StaticResource BackgroundBotton}"
                 Click="ButtonEdit_Click"/>
 
         <Button x:Name="buttonInformation" 
                 Content="Сведения" 
                 HorizontalAlignment="Left"
-                Margin="350,0,0,0"
+                Margin="359,0,0,0"
                 Grid.Row="1" 
                 VerticalAlignment="Center"
-                Height="30"
-                Width="91" 
+                Style="{StaticResource BackgroundBotton}"
                 Click="buttonInformation_Click"/>
+        
+        <Button x:Name="ButtonDelete" 
+            Content="Удалить" 
+            HorizontalAlignment="Left" 
+            Margin="132,0,0,0" 
+            Grid.Row="1" 
+            VerticalAlignment="Center" 
+            Style="{StaticResource BackgroundBotton}"
+            Click="ButtonDelete_Click" />
 
         <ComboBox x:Name="comboBoxChoice" 
                   SelectionChanged="comboBoxChoice_SelectionChanged"
                   Grid.Row="0"
-                  Height="23"
+                  Height="31"
                   VerticalAlignment="Top"
                   HorizontalAlignment="Center" 
                   Grid.Column="2" 
-                  Width="137">
+                  Width="137"
+                  FontFamily="Times New Roman"
+                  FontSize="14"
+                  Foreground="Black">
             <ComboBoxItem Content="Консультант"/>
             <ComboBoxItem Content="Менеджер"/>
         </ComboBox>
-        <Button x:Name="ButtonDelete" 
-            Content="Удалить" 
-            HorizontalAlignment="Left" 
-            Margin="130,0,0,0" 
-            Grid.Row="1" 
-            VerticalAlignment="Center" 
-            Height="30" 
-            Width="91" 
-            Click="ButtonDelete_Click" />
+        
     </Grid>
 </Window>

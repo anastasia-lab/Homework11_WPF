@@ -5,15 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Homework11_WPF.Views"
         mc:Ignorable="d"
-        Title="Сведения" Height="400" Width="650" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <ListView x:Name="listLoadedData">
+        Title="Сведения" Height="400" Width="770" WindowStartupLocation="CenterScreen">
+    <Grid Background="#b5cef5">
+        <ListView x:Name="listLoadedData" 
+                  FontFamily="Times New Roman"
+                  FontSize="14">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=DateTimeChanged}">Дата и время</GridViewColumn>
-                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Path=WhoChanged}">Кто изменил</GridViewColumn>
-                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Path=TypeOfChange}">Тип изменений</GridViewColumn>
-                    <GridViewColumn Width="250" DisplayMemberBinding="{Binding Path=WhatChanged}">Что изменили</GridViewColumn>
+                    <GridViewColumn Width="150" 
+                                    DisplayMemberBinding="{Binding Path=DateTimeChanged, StringFormat='dd/MM/yyyy HH:mm:ss'}">
+                                    Дата и время</GridViewColumn>
+                    
+                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Path=WhoChanged}">Кто изменил</GridViewColumn>
+                    <GridViewColumn Width="170" DisplayMemberBinding="{Binding Path=TypeOfChange}">Тип изменений</GridViewColumn>
+                    <GridViewColumn Width="300" DisplayMemberBinding="{Binding Path=WhatChanged}">Что изменили</GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

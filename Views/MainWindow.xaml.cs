@@ -38,13 +38,17 @@ namespace Homework11_WPF.Views
             ButtonEdit.Visibility = Visibility.Hidden;
             buttonInformation.Visibility = Visibility.Hidden;
             ButtonDelete.Visibility = Visibility.Hidden;
+            StackPanelLableInfo.Visibility = Visibility.Hidden;
+            StackPanelTextBoxInfo.Visibility = Visibility.Hidden;
+            dataGridListPerson.Visibility = Visibility.Hidden;
+            BorderRound.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
-            /// Выбор вида пользователя (менеджер или консультант)
-            /// </summary>
-            /// <param name="sender"></param>
-            /// <param name="e"></param>
+        /// Выбор вида пользователя (менеджер или консультант)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxChoice_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBoxItem _comboBoxItem = (ComboBoxItem)comboBoxChoice.SelectedItem;
@@ -61,6 +65,10 @@ namespace Homework11_WPF.Views
                 ButtonEdit.Visibility = Visibility.Visible;
                 buttonInformation.Visibility = Visibility.Visible;
                 ButtonDelete.Visibility = Visibility.Hidden;
+                StackPanelLableInfo.Visibility = Visibility.Visible;
+                StackPanelTextBoxInfo.Visibility = Visibility.Visible;
+                dataGridListPerson.Visibility = Visibility.Visible;
+                BorderRound.Visibility = Visibility.Visible;
             }
             if (_equalValue == "Менеджер")
             {
@@ -71,6 +79,10 @@ namespace Homework11_WPF.Views
                 ButtonEdit.Visibility = Visibility.Visible;
                 buttonInformation.Visibility = Visibility.Visible;
                 ButtonDelete.Visibility = Visibility.Visible;
+                StackPanelLableInfo.Visibility = Visibility.Visible;
+                StackPanelTextBoxInfo.Visibility = Visibility.Visible;
+                dataGridListPerson.Visibility = Visibility.Visible;
+                BorderRound.Visibility = Visibility.Visible;
             }
         }
 
