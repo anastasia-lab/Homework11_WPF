@@ -58,6 +58,7 @@ namespace Homework11_WPF.Views
 
             if (_equalValue == "Консультант")
             {
+                //consultant.ReadXmlFile(xDocument, _equalValue, peopleList);
                 consultant.ReadXmlFile(xDocument, _equalValue, peopleList);
                 dataGridListPerson.ItemsSource = peopleList;
 

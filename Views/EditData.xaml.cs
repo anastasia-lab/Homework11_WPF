@@ -140,6 +140,7 @@ namespace Homework11_WPF.Views
                         worker.GetEditSurName(textBoxSurname.Text);
                         worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxSurname.Content.ToString(),
                             oldInfo, worker.Surname);
+                        save = xDoc.Element("People").Elements("Person").Where(e => e.Element("Surname").Value == oldInfo).Single();
                     }
                     if ((bool)checkBoxFirstName.IsChecked)
                     {
@@ -147,6 +148,7 @@ namespace Homework11_WPF.Views
                         worker.GetEditFirstName(textBoxFirstName.Text);
                         worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxFirstName.Content.ToString(),
                             oldInfo, worker.FirstName);
+                        save = xDoc.Element("People").Elements("Person").Where(e => e.Element("FirstName").Value == oldInfo).Single();
                     }
                     if ((bool)checkBoxLastName.IsChecked)
                     {
@@ -154,6 +156,7 @@ namespace Homework11_WPF.Views
                         worker.GetEditLastName(textBoxLastName.Text);
                         worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxLastName.Content.ToString(),
                             oldInfo, worker.LastName);
+                        save = xDoc.Element("People").Elements("Person").Where(e => e.Element("LastName").Value == oldInfo).Single();
                     }
                     if ((bool)checkBoxPasportData.IsChecked)
                     {
@@ -161,6 +164,7 @@ namespace Homework11_WPF.Views
                         worker.GetEditPasportData(textBoxPassportData.Text);
                         worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxPasportData.Content.ToString(),
                             oldInfo, worker.PasportData);
+                        save = xDoc.Element("People").Elements("Person").Where(e => e.Element("PassportData").Value == oldInfo).Single();
                     }
                     if ((bool)checkBoxPhoneNumber.IsChecked)
                     {
@@ -168,11 +172,10 @@ namespace Homework11_WPF.Views
                         worker.GetEditPhoneNumber(textBoxPhoneNumber.Text);
                         worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxPhoneNumber.Content.ToString(),
                             oldInfo, worker.PhoneNumber.ToString());
+                        save = xDoc.Element("People").Elements("Person").Where(e => e.Element("MobilePhone").Value == oldInfo).Single();
                     }
                 }
-
-                save = xDoc.Element("People").Elements("Person").Where(e => e.Element("Surname").Value == oldInfo).Single();
-                save.Save("people.xml");
+                //save.Save("people.xml");
             }
 
             peopleList.RemoveAt(index);

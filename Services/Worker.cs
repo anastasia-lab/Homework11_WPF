@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace Homework11_WPF
 {
@@ -34,45 +35,91 @@ namespace Homework11_WPF
             Consultant[] consultant = new Consultant[index];
             Manager[] manager = new Manager[index];
 
-            foreach (XElement person in people.Elements("Person"))
+            #region XElement
+            //foreach (XElement person in people.Elements("Person"))
+            //{
+            //    for (int i = 0; i < 1; i++)
+            //    {
+            //        XElement? SurnamePersone = person.Element("Surname");
+            //        XElement? FirstNamePersone = person.Element("FirstName");
+            //        XElement? LastNamePersone = person.Element("LastName");
+            //        XElement? PassportDataPersone = person.Element("PassportData");
+            //        XElement? PhoneNumberPersone = person.Element("MobilePhone");
+
+            //        if (resultConsultant == true)
+            //        {
+            //            consultant[i] = new Consultant();
+            //            consultant[i].Surname = SurnamePersone.Value;
+            //            consultant[i].FirstName = FirstNamePersone.Value;
+            //            consultant[i].LastName = LastNamePersone.Value;
+            //            if (PassportDataPersone.Value != "")
+            //                consultant[i].PasportData = PassportDataPersone.Value;
+            //            if (PhoneNumberPersone.Value != "")
+            //                consultant[i].PhoneNumber = double.Parse(PhoneNumberPersone.Value);
+            //            peopleList.Add(consultant[i]);
+            //        }
+
+            //        if (resultManager == true)
+            //        {
+            //            manager[i] = new Manager();
+            //            manager[i].Surname = SurnamePersone.Value;
+            //            manager[i].FirstName = FirstNamePersone.Value;
+            //            manager[i].LastName = LastNamePersone.Value;
+            //            if (PassportDataPersone.Value != "")
+            //                manager[i].PasportData = PassportDataPersone.Value;
+            //            if (PhoneNumberPersone.Value != "")
+            //                manager[i].PhoneNumber = double.Parse(PhoneNumberPersone.Value);
+            //            peopleList.Add(manager[i]);
+            //        }
+            //    }
+            //}
+            #endregion
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Worker[]));
+
+            #region Deserialize
+            using (var reader = new StringReader(xDocument.ToString()))
             {
-                for (int i = 0; i < 1; i++)
+                Worker[] workers = xmlSerializer.Deserialize(reader) as Worker[];
+
+                if (workers != null)
                 {
-                    XElement? SurnamePersone = person.Element("Surname");
-                    XElement? FirstNamePersone = person.Element("FirstName");
-                    XElement? LastNamePersone = person.Element("LastName");
-                    XElement? PassportDataPersone = person.Element("PassportData");
-                    XElement? PhoneNumberPersone = person.Element("MobilePhone");
-
-                    if (resultConsultant == true)
+                    foreach (Worker worker in workers)
                     {
-                        consultant[i] = new Consultant();
-                        consultant[i].Surname = SurnamePersone.Value;
-                        consultant[i].FirstName = FirstNamePersone.Value;
-                        consultant[i].LastName = LastNamePersone.Value;
-                        if (PassportDataPersone.Value != "")
-                            consultant[i].PasportData = PassportDataPersone.Value;
-                        if (PhoneNumberPersone.Value != "")
-                            consultant[i].PhoneNumber = double.Parse(PhoneNumberPersone.Value);
-                        peopleList.Add(consultant[i]);
-                    }
+                        for (int i = 0; i < workers.Length; i++)
+                        {
+                            if (resultConsultant == true)
+                            {
+                                consultant[i] = new Consultant();
+                                consultant[i].Surname = worker.Surname;
+                                consultant[i].FirstName = worker.FirstName;
+                                consultant[i].LastName = worker.LastName;
+                                if (worker.PasportData != "")
+                                    consultant[i].PasportData = worker.PasportData;
+                                if (worker.PhoneNumber.ToString() != "")
+                                    consultant[i].PhoneNumber = worker.PhoneNumber;
+                                peopleList.Add(consultant[i]);
+                            }
 
-                    if (resultManager == true)
-                    {
-                        manager[i] = new Manager();
-                        manager[i].Surname = SurnamePersone.Value;
-                        manager[i].FirstName = FirstNamePersone.Value;
-                        manager[i].LastName = LastNamePersone.Value;
-                        if (PassportDataPersone.Value != "")
-                            manager[i].PasportData = PassportDataPersone.Value;
-                        if (PhoneNumberPersone.Value != "")
-                            manager[i].PhoneNumber = double.Parse(PhoneNumberPersone.Value);
-                        peopleList.Add(manager[i]);
+                            if (resultManager == true)
+                            {
+                                manager[i] = new Manager();
+                                manager[i].Surname = worker.Surname;
+                                manager[i].FirstName = worker.FirstName;
+                                manager[i].LastName = worker.LastName;
+                                if (worker.PasportData != "")
+                                    manager[i].PasportData = worker.PasportData;
+                                if (worker.PhoneNumber.ToString() != "")
+                                    manager[i].PhoneNumber = worker.PhoneNumber;
+                                peopleList.Add(manager[i]);
+                            }
+                        }
                     }
                 }
             }
+            #endregion
 
-            return peopleList;
+                return peopleList;
         }
 
         /// <summary>
@@ -86,7 +133,7 @@ namespace Homework11_WPF
         }
 
         /// <summary>
-        /// Сохранение изменений данных в отдельном txt-файле
+        /// Сохранение измененных данных в отдельном txt-файле
         /// </summary>
         /// <param name="value">Кто изменил(менеджер или консультант)</param>
         /// <param name="infoAboutEdit">Информация об изменении (редактирование/удаление/добавление)</param>
@@ -162,5 +209,6 @@ namespace Homework11_WPF
         {
             this.PhoneNumber = double.Parse(newPhoneNumber);
         }
+
     }
 }
