@@ -27,7 +27,7 @@ namespace Homework11_WPF.Views
         private ObservableCollection<Worker> peopleList { get; set; }
         private Consultant consultant = new Consultant();
         private Manager manager = new Manager();
-        XDocument xDocument = XDocument.Load("people.xml");
+        //XDocument xDocument = XDocument.Load("person.xml");
         private Worker SelectedData { get; set; }
 
         public MainWindow()
@@ -58,8 +58,7 @@ namespace Homework11_WPF.Views
 
             if (_equalValue == "Консультант")
             {
-                //consultant.ReadXmlFile(xDocument, _equalValue, peopleList);
-                consultant.ReadXmlFile(xDocument, _equalValue, peopleList);
+                consultant.ReadXmlFile("person.xml", _equalValue, peopleList);
                 dataGridListPerson.ItemsSource = peopleList;
 
                 ButtonAdd.Visibility = Visibility.Hidden;
@@ -73,7 +72,7 @@ namespace Homework11_WPF.Views
             }
             if (_equalValue == "Менеджер")
             {
-                manager.ReadXmlFile(xDocument, _equalValue, peopleList);
+                manager.ReadXmlFile("person.xml", _equalValue, peopleList);
                 dataGridListPerson.ItemsSource = peopleList;
 
                 ButtonAdd.Visibility = Visibility.Visible;
@@ -110,8 +109,8 @@ namespace Homework11_WPF.Views
 
             if (peopleList != null && SelectedData != null)
             {
-                int index = peopleList.IndexOf(SelectedData);
-                EditData editData = new EditData(peopleList, SelectedData, index, _equalValue);
+                int recordIndex = peopleList.IndexOf(SelectedData);
+                EditData editData = new EditData(peopleList, SelectedData, recordIndex, _equalValue);
                 editData.ShowDialog();
             }
         }
@@ -138,23 +137,21 @@ namespace Homework11_WPF.Views
             if (SelectedData != null)
             {
                 Manager managerDelete = new Manager(SelectedData);
-                //xDocument.Root.Element("People").
-                xDocument.Descendants("Person").Where(
-                    e => e.Element("Surname").Value == managerDelete.Surname &&
-                    e.Element("FirstName").Value == managerDelete.FirstName &&
-                    e.Element("LastName").Value == managerDelete.LastName &&
-                    e.Element("PassportData").Value == managerDelete.PasportData &&
-                    e.Element("MobilePhone").Value == managerDelete.PhoneNumber.ToString()).Remove();
+                try
+                {
+                    managerDelete.GetSaveTxtEditData("Менеджер", "Удаление", "Клиент: ", managerDelete.Surname + " " +
+                                                      managerDelete.FirstName + " " + managerDelete.LastName, "");
+                    peopleList.Remove(SelectedData);
+                    managerDelete.SaveXmlFile(peopleList);
 
-                //using (FileStream stream = new FileStream("people.xml", FileMode.OpenOrCreate))
-                //    xDocument.Save(stream);
-                managerDelete.GetSaveTxtEditData("Менеджер", "Удаление", "Клиент", managerDelete.Surname + 
-                                                  managerDelete.FirstName + managerDelete.LastName, "");
-                peopleList.Remove(SelectedData);
-
-                MessageBox.Show($"Данные {SelectedData.Surname}"+ " " +
-                                $"{ SelectedData.FirstName +" " + SelectedData.LastName} удалены",
-                                "Удалить", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show($"Данные {SelectedData.Surname}" + " " +
+                                    $"{ SelectedData.FirstName + " " + SelectedData.LastName} удалены",
+                                    "Удалить", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Внимание!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
         }
 

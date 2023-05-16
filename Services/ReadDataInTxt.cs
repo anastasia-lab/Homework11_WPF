@@ -8,9 +8,11 @@ namespace Homework11_WPF.Services
     {
         public ReadDataInTxt() { }
 
+        #region Свойства
         public string WhoChanged {get; set;}
         public DateTime DateTimeChanged { get; set; }
         public string WhatChanged { get; set; }
         public string TypeOfChange { get; set; }
+        #endregion
     }
 }

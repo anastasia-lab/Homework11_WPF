@@ -22,10 +22,10 @@ namespace Homework11_WPF.Views
     /// </summary>
     public partial class EditData : Window
     {
-        XDocument xDoc = XDocument.Load("people.xml");
+        //XDocument xDoc = XDocument.Load("person.xml");
         ObservableCollection<Worker> peopleList;
         Worker worker;
-        int index;
+        int recordIndex;
         string equalValue; //выбранное значение в ComboBox
 
         #region Конструкторы
@@ -35,14 +35,15 @@ namespace Homework11_WPF.Views
             this.peopleList = _peopleList;
 
             StackPanelCheckBoxes.Visibility = Visibility.Hidden;
+            BorderRoundColor.Visibility = Visibility.Hidden;
         }
 
-        public EditData(ObservableCollection<Worker> peopleList, Worker worker, int index, string _equalValue)
+        public EditData(ObservableCollection<Worker> peopleList, Worker worker, int recordIndex, string _equalValue)
         {
             InitializeComponent();
             this.peopleList = peopleList;
             this.worker = worker;
-            this.index = index;
+            this.recordIndex = recordIndex;
             this.equalValue = _equalValue;
 
             checkBoxSurname.Visibility = Visibility.Hidden;
@@ -58,18 +59,24 @@ namespace Homework11_WPF.Views
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            if (peopleList != null && worker != null)
+            try
             {
-                GetEditData();
-            }
+                if (peopleList != null && worker != null)
+                    GetEditData();
 
-            if (peopleList != null && worker == null)
-                GetAddNewData();
+                if (peopleList != null && worker == null)
+                    GetAddNewData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Внимание!", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
 
             this.Close();
         }
 
         #region Методы
+
         /// <summary>
         /// Загрузка данных
         /// </summary>
@@ -107,24 +114,28 @@ namespace Homework11_WPF.Views
         /// </summary>
         private void GetEditData()
         {
-            XElement save; //сохранение в xml файл
-
             if (equalValue == "Консультант")
             {
                 if (peopleList != null && worker != null)
                 {
-                    save = xDoc.Element("People").Elements("Person").Where(e => e.Element("Surname").Value == textBoxSurname.Text).Single();
-
-                    if ((bool)checkBoxPhoneNumber.IsChecked) 
+                    try
                     {
-                        string oldInfo = worker.PhoneNumber.ToString(); //старая информация при редактировании
-                        worker.GetChangePhoneNumber(double.Parse(textBoxPhoneNumber.Text));
-                        worker.GetSaveTxtEditData(equalValue,"редактирование",checkBoxPhoneNumber.Content.ToString(), 
-                                                  oldInfo, worker.PhoneNumber.ToString());
-                    }
+                        if ((bool)checkBoxPhoneNumber.IsChecked)
+                        {
+                            string oldInfo = worker.PhoneNumber.ToString(); //старая информация при редактировании
+                            worker.GetChangePhoneNumber(double.Parse(textBoxPhoneNumber.Text), peopleList, recordIndex);
+                            worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxPhoneNumber.Content.ToString(),
+                                                      oldInfo, worker.PhoneNumber.ToString());
 
-                    save.Element("MobilePhone").Value = worker.GetChangePhoneNumber(double.Parse(textBoxPhoneNumber.Text)).ToString();
-                    save.Save("people.xml");
+                            peopleList.RemoveAt(recordIndex);
+                            peopleList.Insert(recordIndex, worker);
+                            worker.SaveXmlFile(peopleList);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Внимание!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
             }
 
@@ -134,52 +145,53 @@ namespace Homework11_WPF.Views
 
                 if (peopleList != null && worker != null)
                 {
-                    if ((bool)checkBoxSurname.IsChecked)
+                    try
                     {
-                        oldInfo = worker.Surname;
-                        worker.GetEditSurName(textBoxSurname.Text);
-                        worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxSurname.Content.ToString(),
-                            oldInfo, worker.Surname);
-                        save = xDoc.Element("People").Elements("Person").Where(e => e.Element("Surname").Value == oldInfo).Single();
+                        if ((bool)checkBoxSurname.IsChecked)
+                        {
+                            oldInfo = worker.Surname;
+                            worker.GetEditSurName(textBoxSurname.Text);
+                            worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxSurname.Content.ToString(),
+                                oldInfo, worker.Surname);
+                        }
+                        if ((bool)checkBoxFirstName.IsChecked)
+                        {
+                            oldInfo = worker.FirstName;
+                            worker.GetEditFirstName(textBoxFirstName.Text);
+                            worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxFirstName.Content.ToString(),
+                                oldInfo, worker.FirstName);
+                        }
+                        if ((bool)checkBoxLastName.IsChecked)
+                        {
+                            oldInfo = worker.LastName;
+                            worker.GetEditLastName(textBoxLastName.Text);
+                            worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxLastName.Content.ToString(),
+                                oldInfo, worker.LastName);
+                        }
+                        if ((bool)checkBoxPasportData.IsChecked)
+                        {
+                            oldInfo = worker.PasportData;
+                            worker.GetEditPasportData(textBoxPassportData.Text);
+                            worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxPasportData.Content.ToString(),
+                                oldInfo, worker.PasportData);
+                        }
+                        if ((bool)checkBoxPhoneNumber.IsChecked)
+                        {
+                            oldInfo = worker.PhoneNumber.ToString();
+                            worker.GetEditPhoneNumber(textBoxPhoneNumber.Text);
+                            worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxPhoneNumber.Content.ToString(),
+                                oldInfo, worker.PhoneNumber.ToString());
+                        }
+
+                        peopleList.RemoveAt(recordIndex);
+                        peopleList.Insert(recordIndex, worker);
                     }
-                    if ((bool)checkBoxFirstName.IsChecked)
+                    catch(Exception ex)
                     {
-                        oldInfo = worker.FirstName;
-                        worker.GetEditFirstName(textBoxFirstName.Text);
-                        worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxFirstName.Content.ToString(),
-                            oldInfo, worker.FirstName);
-                        save = xDoc.Element("People").Elements("Person").Where(e => e.Element("FirstName").Value == oldInfo).Single();
-                    }
-                    if ((bool)checkBoxLastName.IsChecked)
-                    {
-                        oldInfo = worker.LastName;
-                        worker.GetEditLastName(textBoxLastName.Text);
-                        worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxLastName.Content.ToString(),
-                            oldInfo, worker.LastName);
-                        save = xDoc.Element("People").Elements("Person").Where(e => e.Element("LastName").Value == oldInfo).Single();
-                    }
-                    if ((bool)checkBoxPasportData.IsChecked)
-                    {
-                        oldInfo = worker.PasportData;
-                        worker.GetEditPasportData(textBoxPassportData.Text);
-                        worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxPasportData.Content.ToString(),
-                            oldInfo, worker.PasportData);
-                        save = xDoc.Element("People").Elements("Person").Where(e => e.Element("PassportData").Value == oldInfo).Single();
-                    }
-                    if ((bool)checkBoxPhoneNumber.IsChecked)
-                    {
-                        oldInfo = worker.PhoneNumber.ToString();
-                        worker.GetEditPhoneNumber(textBoxPhoneNumber.Text);
-                        worker.GetSaveTxtEditData(equalValue, "редактирование", checkBoxPhoneNumber.Content.ToString(),
-                            oldInfo, worker.PhoneNumber.ToString());
-                        save = xDoc.Element("People").Elements("Person").Where(e => e.Element("MobilePhone").Value == oldInfo).Single();
+                        MessageBox.Show(ex.Message, "Внимание!", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
-                //save.Save("people.xml");
             }
-
-            peopleList.RemoveAt(index);
-            peopleList.Insert(index, worker);
         }
 
         /// <summary>
@@ -187,6 +199,7 @@ namespace Homework11_WPF.Views
         /// </summary>
         private void GetAddNewData()
         {
+            
             string _Surname = textBoxSurname.Text;
             string _FirstName = textBoxFirstName.Text;
             string _LastName = textBoxLastName.Text;
@@ -195,10 +208,16 @@ namespace Homework11_WPF.Views
 
             Manager manager = new Manager(_Surname, _FirstName, _LastName, _PasportData, _PhoneNumber);
 
-            manager.GetAddDataOfManager(peopleList, manager);
-            //manager.GetSaveNewClient(xDoc);
-            manager.GetSaveTxtEditData("Менеджер","добавление","Новый клиент", $"{manager.Surname}" + " " + 
-                                        $"{manager.FirstName}" + " " + $"{manager.LastName}","");
+            try
+            {
+                manager.GetAddDataOfManager(peopleList, manager);
+                manager.GetSaveTxtEditData("Менеджер", "добавление", "Новый клиент", $"{manager.Surname}" + " " +
+                                            $"{manager.FirstName}" + " " + $"{manager.LastName}", "");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Внимание!", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
         #endregion
     }

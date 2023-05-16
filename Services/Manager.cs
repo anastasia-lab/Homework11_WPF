@@ -6,6 +6,7 @@ using System.Xml.Linq;
 
 namespace Homework11_WPF
 {
+    [Serializable]
     public class Manager : Worker
     {
         #region Конструкторы
@@ -40,6 +41,7 @@ namespace Homework11_WPF
         public void GetAddDataOfManager(ObservableCollection<Worker> peopleList, Manager manager)
         {
             peopleList.Add(manager);
+            SaveXmlFile(peopleList);
         }
 
         /// <summary>
