@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Worker>
+    <Surname>Петров</Surname>
+    <FirstName>Иван</FirstName>
+    <LastName>Иванович</LastName>
+    <PhoneNumber>7777777</PhoneNumber>
+    <PasportData>0569 753109</PasportData>
+  </Worker>
+  <Worker>
+    <Surname>Иванов</Surname>
+    <FirstName>Сергей</FirstName>
+    <LastName>Петрович</LastName>
+    <PhoneNumber>79120367219</PhoneNumber>
+    <PasportData>9831 548971</PasportData>
+  </Worker>
+  <Worker>
+    <Surname>Смирнов</Surname>
+    <FirstName>Василий</FirstName>
+    <LastName>Андреевич</LastName>
+    <PhoneNumber>79652981036</PhoneNumber>
+    <PasportData>8950 732569</PasportData>
+  </Worker>
+  <Worker>
+    <Surname>Тихонов</Surname>
+    <FirstName>Анатолий</FirstName>
+    <LastName>Семёнович</LastName>
+    <PhoneNumber>79256710914</PhoneNumber>
+    <PasportData>4189 274630</PasportData>
+  </Worker>
+</ArrayOfWorker>
