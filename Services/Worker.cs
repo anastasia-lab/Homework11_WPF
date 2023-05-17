@@ -11,6 +11,7 @@ using System.Xml.Serialization;
 
 namespace Homework11_WPF
 {
+    //[XmlInclude(typeof(Manager)), XmlInclude(typeof(Consultant))]
     [Serializable]
     public class Worker: IClient
     {
@@ -109,10 +110,6 @@ namespace Homework11_WPF
                     }
                 }
             }
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Проверьте правильность данных в файле.", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //}
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Внимание!", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -128,10 +125,11 @@ namespace Homework11_WPF
         internal void SaveXmlFile(ObservableCollection<Worker> peopleList)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(Worker[]));
+            Worker[] workers = peopleList.ToArray();
 
             using (FileStream fs = new FileStream("person.xml", FileMode.OpenOrCreate))
             {
-                xmlSerializer.Serialize(fs, peopleList);
+                xmlSerializer.Serialize(fs, workers);
             }
         }
 

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace Homework11_WPF
 {
     [Serializable]
    public class Consultant : Worker
    {
+        string passportData;
         /// <summary>
         /// Создание консультанта
         /// </summary>
@@ -22,6 +24,7 @@ namespace Homework11_WPF
         public override string PasportData
         {
             get { return "*****"; }
+            //set { passportData = value; }
         }
     }
 }
